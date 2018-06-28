@@ -2,6 +2,18 @@
 .shortRadio {
     margin-top: 0px;
 }
+.dddList {
+    margin-top: 0px;
+}
+.inlineCheck {
+    display: inline;
+}
+.PPCheck {
+    display: none;
+}
+.disabledCheck {
+    display: none;
+}
 input[type=checkbox] {
     padding-inline-start: 10px;
     padding-left: 15px;
