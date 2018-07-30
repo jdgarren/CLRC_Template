@@ -1,15 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-us">
 
 <head>
-    <link rel="stylesheet" href="CSS/dcfGeneralStyles.css">
-    <link rel="stylesheet" href="CSS/index.css">
-    <link rel="stylesheet" href="CSS/CLRC.css">
+    <title>ACCESS Florida CLRC Template</title>
+    <link rel="stylesheet" href="./CSS/dcfGeneralStyles.css">
+    <link rel="stylesheet" href="./CSS/index.css">
+    <link rel="stylesheet" href="./CSS/CLRC.css">
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="State of Florida ESS CLRC Template">
     <meta name="author" content="James Garren">
 
+    <script src="./Scripts/moment-with-locales.js"></script>
+    <script src="./Scripts/CLRCScripts.js"></script>
     <script>
         var fedMinWage = 7.25;
         var abawdIncomeEquiv = (fedMinWage*30).toFixed(2);
@@ -24,326 +28,16 @@
         var abawdHList = [];
         var abawdMemsList = [];
         var abawdMem = "";
+        var dddBuilt = false;
+        var potenDDD = [];
 
-        function checkMoreAbawd(array) {
-            if (array.length == 0) {
-                alert('No more ABAWD members to process.')
-            }
-        }
-    </script>
-
-    <script>
-        function getabawdName(d, array) {
-            document.getElementById('incomeSpan').innerHTML=abawdIncomeEquiv;
-            document.getElementById('abawdDiv' + d + '0').style.display = "none";
-            document.getElementById('abawdDiv' + d + '1').style.display = "none";
-            document.getElementById('abawdDiv' + d + '2').style.display = "none";
-            document.getElementById('abawd' + d + 'NextDiv').style.display = "none";
-            for (i = 0; i < array.length; i++) {
-                document.getElementById('abawdDiv' + d + i).style.display = "inline";
-                document.getElementById('abawd' + d + 'Label' + i).innerHTML = array[i];
-                document.getElementById('abawd'+ d + 'NextDiv').style.display = "inline";
-            }
-        }
-    </script>
-
-    <script>
-        function buildAbawdArray(c, d, array1, array2) {
-            for (i = 0; i < array1.length; i++) {
-                if (document.getElementById('abawd' + c + 'Name' + i).checked == false) {
-                    if (array2.indexOf(document.getElementById('abawd' + c + 'Label' + i).innerHTML) == -1) {
-                        array2.push(array1[i]);
-                    }
-                }
-            }
-            return (array2);
-        }
-    </script>
-
-    <script id="showHHColumn">
-        function showColumn(it, box) {
-            var vis = (box.checked) ? "block" : "none";
-            var x = document.getElementsByClassName(it);
-            for (i = 0; i < x.length; i++) {
-                x[i].style.display = vis;
-        }
-    }
-    </script>
-
-    <script id="showMe">
-        function showMe(it, box) {
-            var vis = (box.checked) ? "block" : "none";
-            document.getElementById(it).style.display = vis;
-        }
-    </script>
-
-    <script id="showRows">
-        function showRows(row) {
-            var result_style = document.getElementById(row).style;
-            result_style.display = 'table-row';
-        }
-    </script>
-
-    <script id="hideIt">
-        function hideIt(it, box) {
-            var invis = (box.checked) ? "none" : "block";
-            document.getElementById(it).style.display = invis;
-        }
-    </script>
-
-    <script id="intvReset">
-        function intvReset(it, box) {
-            document.getElementById('intvNeedYes').checked = false;
-            document.getElementById('intvNeedNo').checked = false;
-            var invis = (box.checked) ? "none" : "block";
-            document.getElementById(it).style.display = invis;
-            document.getElementById('interviewNeeded1').style.display = invis;
-            document.getElementById('intvAttemptYes1').style.display = invis;
-        }
-    </script>
-
-    <script>
-        function auto_grow(element) {
-            element.style.height = "5px";
-            element.style.height = (element.scrollHeight) + "px";
-        }
-    </script>
-
-    <script id="benefitsApplied">
-        function benefitsApplied() {
-            var fab = document.getElementById("fa").checked;
-            var cab = document.getElementById("tca").checked;
-            var mab = document.getElementById("meds").checked;
-            var caType = document.getElementById("typeTCA1").value;
-            var intCheck = document.querySelector('input[name="int"]:checked');
-            var intvd = document.querySelector('input[name="int"]:checked').value;
-            var cmnAr = document.getElementById("commonArea");
-            var wrapAr = document.getElementById("wrapUpArea");
-            var clrcText = document.getElementById("clrcPasteInfo");
-            document.getElementById("demo").innerHTML = fab;
-            if (intCheck == false) {
-                alert("Please enter a selection for 'Interview Completed'");
-            }
-            cmnAr.style.display = "block";
-            wrapAr.style.display = "block";
-            clrcText.style.display = "block";
-        }
-    </script>
-
-    <script id="whichSections">
-        function getSections() {
-            var fab = document.getElementById("fa").checked;
-            var cab = document.getElementById("tca").checked;
-            var mab = document.getElementById("meds").checked;
-            if (cab == false) {
-                document.getElementById("typeTCA1").value = "none"
-            }
-            var caType = document.getElementById("typeTCA1").value;
-            var cmnAr = document.getElementById("commonArea");
-            var wrapAr = document.getElementById("wrapUpArea");
-            var clrcText = document.getElementById("clrcPasteInfo");
-            var intvArea = document.getElementById("interviewArea");
-            var faArea = document.getElementById("foodAssistArea");
-            var medArea = document.getElementById("medicaidArea");
-            var regArea = document.getElementById("regularTCA");
-            var caretakerArea = document.getElementById("caretakerTCAArea");
-            var rapArea = document.getElementById("rapTCAArea");
-            var intCheck = document.querySelector('input[name="int"]:checked');
-            if (intCheck == null) {
-                alert("Please enter a selection for 'Interview Completed?'");
-                return;
-            }
-            else {
-                var intvd = document.querySelector('input[name="int"]:checked').value;
-            }
-            intvArea.style.display = "none";
-            faArea.style.display = "none";
-            medArea.style.display = "none";
-            regArea.style.display = "none";
-            caretakerArea.style.display = "none";
-            rapArea.style.display = "none";
-            cmnAr.style.display = "none";
-            wrapAr.style.display = "none";
-            clrcText.style.display = "none";
-            if (intvd == 'Yes') {
-                intvArea.style.display = "block";
-            };
-            if (fab == true) {
-                faArea.style.display = "block";
-            };
-            if (mab == true) {
-                medArea.style.display = "block";
-            };
-            if (caType == "tca") {
-                regArea.style.display = "block";
-            };
-            if (caType == "caretakerTCA") {
-                caretakerArea.style.display = "block";
-            };
-            if (caType == "rap") {
-                rapArea.style.display = "block";
-            };
-            cmnAr.style.display = "block";
-            wrapAr.style.display = "block";
-            clrcText.style.display = "block";
-        }
-    </script>
-    <script src="./Scripts/moment-with-locales.js"></script>
-    <script>
-        moment().format();
-    </script>
-
-    <script id="createArray">
-        function createArray() {
-            var hhNameArray = [];
-            for (i = 0; i < 10; i++) {
-                if (document.getElementById('name' + (i + 1)).value != "") {
-                    hhNameArray.push(document.getElementById('name' + (i + 1)).value);
-                }
-            };
-            var hhAgeArray = [];
-            for (o = 0; o < 10; o++) {
-                if (document.getElementById('name' + (o + 1)).value != "") {
-                    hhAgeArray.push(document.getElementById('age' + (o + 1)).value);
-                }
-            };
-            var hhAppArray = [];
-            for (p = 0; p < 10; p++) {
-                if (document.getElementById('name' + (p + 1)).value != "") {
-                    hhAppArray.push(document.getElementById('apply' + (p + 1)).checked);
-                }
-            }
-            var hhPPArray = [];
-            for (a = 0; a < 10; a++) {
-                if (document.getElementById('name' + (a + 1)).value != "") {
-                    hhPPArray.push(document.getElementById('pandp' + (a + 1)).checked);
-                }
-            }
-            var hhDisqArray = [];
-            for (s = 0; s < 10; s++) {
-                if (document.getElementById('name' + (s + 1)).value != "") {
-                    hhDisqArray.push(document.getElementById('disq' + (s + 1)).checked);
-                }
-            }
-            var hhCompArray = [hhNameArray, hhAgeArray]
-            var childMember = hhAgeArray.some(function(e) {
-                return e < 18;
-            });
-            var abawdMember = hhAgeArray.some(function(e) {
-                return e < 49 && e > 18;
-            });
-            var disqMember = hhDisqArray.some(function(e) {
-                return e == true;
-            });
-            if (disqMember == true) {
-                document.getElementById("sanction1").style.display = "block";
-            }
-            var fab = document.getElementById("fa").checked;
-            if (fab == true && abawdMember == true && childMember == false) {
-                document.getElementById("abawdStuff").style.display = "block";
-            }
-            var applyMember = hhAppArray.some(function(e) {
-                return e == false;
-            });
-        }
-    </script>
-
-    <script>
-        function abawdData() {
-            var hhNameArray = [];
-            var hhAgeArray = [];
-            abawdMembList = [];
-            for (i = 0; i < 10; i++) {
-                if (document.getElementById('name' + (i + 1)).value != "") {
-                    hhNameArray.push(document.getElementById('name' + (i + 1)).value);
-                }
-            };
-            for (o = 0; o < 10; o++) {
-                if (document.getElementById('name' + (o + 1)).value != "") {
-                    hhAgeArray.push(document.getElementById('age' + (o + 1)).value);
-                }
-            };
-            var childMember = hhAgeArray.some(function(e) {
-                return e < 18;
-            });
-            for (a = 0; a < hhNameArray.length; a++) {
-                if (childMember == false) {
-                    if (hhAgeArray[a] < 49 && hhAgeArray[a] > 18) {
-                        abawdMembList.push(hhNameArray[a]);
-                    }
-                }
-            }
-            return (abawdMembList);
-        }
-    </script>
-
-    <script>
-        function sliceCLRC() {
-            var clrcTxt = document.getElementById("clrcInfo").value;
-            var start = 0;
-            var end = 720;
-            for (start, i = 1; start < clrcTxt.length; start = end + 1, end = end + 721, i++) {
-                clrcSection = clrcTxt.substring(start, end);
-                if (document.getElementById('browserType1').checked == true) {
-                    document.getElementById("clrcBucket" + i).style.display = "none";
-                    alert(clrcSection);
-                } else {
-                    document.getElementById("clrcBucket" + i).style.display = "block";
-                    document.getElementById("clrcBucket" + i).value = clrcSection;
-                    document.getElementById("clrcBucket" + i).focus();
-                }
-            }
-        }
-    </script>
-
-    <script>
-        function authentCheck() {
-            var authOpt = document.getElementById("authent").value;
-            if (authOpt != "Automatic" && authOpt != "none") {
-                document.getElementById("authenDisc").style.display = "block";
-            } else {
-                document.getElementById("authenDisc").style.display = "none"
-            }
-        }
-    </script>
-
-    <script>
-        function buildAbawdMems(array) {
-            abawdMemsList = [];
-            for (i = 0; i < array.length; i++) {
-                if (document.getElementById('abawdIName' + i).checked == false) {
-                        abawdMemsList.push(array[i]);
-                }
-            }
-            if (abawdMemsList.length == 1) {
-                abawdMem = abawdMemsList + " appears to be an ABAWD Member (AGPI: 18 Y)";
-                alert(abawdMem);
-            }
-            if (abawdMemsList.length > 1) {
-                abawdMem = abawdMemsList + " appear to be ABAWD Members (AGPI: 18 Y)";
-                alert(abawdMem);
-            }
-            return (abawdMemsList);
-            return (abawdMem);
-        }
-        
-    </script>
-
-    <script>
-        function abawdHourChangeCheck() {
-            for (i = 0; i < abawdMembList.length; i++) {
-                if (document.getElementById('abawdEName' + i).checked == true || document.getElementById('abawdIName' + i).checked == true) {
-                    document.getElementById('abawdWorking').style.display = "inline";
-                }
-            }
-        }
     </script>
 
 
 </head>
 
 <body>
-    <section>
+    <header class="header">
         <table cellspacing="0" align="center" cellpadding="0">
             <tbody>
                 <tr>
@@ -359,6 +53,7 @@
                                                 </span>
                                             </div>
                                         </td>
+                                        </tr>
                                         <tr>
                                             <td style="width: 10%;vertical-align: middle;">
                                                 <div id="dcflogoDiv" align="center">
@@ -370,7 +65,9 @@
                                                     <table class="accessNameDivText">
                                                         <tbody>
                                                             <tr>
-                                                                <td class="accessNameDivText">ACCESS Florida</td>
+                                                                <td class="accessNameDivText">
+                                                                    ACCESS Florida
+                                                                </td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
@@ -379,13 +76,14 @@
                             </table>
                         </div>
                         </td>
+                </tr>
                         </tr>
             </tbody>
         </table>
-    </section>
+    </header>
     <section class="tempSel" id="templateSelector">
         <h1>CLRC Template</h1>
-        <form id='clrcTemplate'>
+        <form id="clrcTemplate">
             <p>Benefits Applied for:</p>
             <label type="checkbox" for="fa" name="benefit">Food Assistance</label>
             <input type="checkbox" id="fa" name="benefit" onclick= "showColumn('PPCheck', this)">
@@ -396,7 +94,7 @@
 
             <div id="typeTCA" style="display:none">
                 <br>
-                <label type="select" for="typeTCA">Cash Assistance Type:</label>
+                <label type="select" for="typeTCA1">Cash Assistance Type:</label>
                 <select id="typeTCA1">
                     <option value="none"></option>
                     <option value="tca">TCA</option>
@@ -405,7 +103,7 @@
                 </select>
             </div>
             <br>
-            <label type="radio">Interview completed?</label>
+            <label type="radio" for="int">Interview Completed?</label>
             <label type="radio" for="intvdYes">Yes</label>
             <input type="radio" id="intvdYes" name="int" value="Yes" onclick="intvReset('intvAttempt', this)">
             <label type="radio" for="intvdNo">No</label>
@@ -414,22 +112,22 @@
             <input type="radio" id="intvdNA" name="int" value="NA" onclick="intvReset('intvAttempt', this)" checked>
             <div id="intvAttempt" style="display:none">
                 <label type="radio" for="intvNeedYes" name="interviewNeeded">Interview Attempted: Yes</label>
-                <input type="radio" id="intvNeedYes" value=yes name="interviewNeeded" onclick="showMe('intvAttemptYes1', this)">
-                <label type="radio" for="intvNeedNo" name="interviewNeeded" value=no>No</label>
-                <input type="radio" id="intvNeedNo" name="interviewNeeded" value=no onclick="showMe('interviewNeeded1', this)">
+                <input type="radio" id="intvNeedYes" value="yes" name="interviewNeeded" onclick="showMe('intvAttemptYes1', this)">
+                <label type="radio" for="intvNeedNo" name="interviewNeeded" value="no">No</label>
+                <input type="radio" id="intvNeedNo" name="interviewNeeded" value="no" onclick="showMe('interviewNeeded1', this)">
                 <div id="interviewNeeded1" style="display:none">
                     <br>
-                    <textarea type=textarea name="intvAttemptDisc" placeholder="Explain why the interview was not attempted." rows="4" onkeyup="auto_grow(this)"></textarea>
+                    <textarea type="textarea" name="intvAttemptDisc" placeholder="Explain why the interview was not attempted." rows="4" onkeyup="auto_grow(this)"></textarea>
                 </div>
                 <br>
                 <div id="intvAttemptYes1" style="display:none">
                     <label type="select" for="intvAttemptOutcome">Outcome of Interview Attempt:</label>
                     <select id="intvAttemptOutcome">
-                        <option value="none"></option>
+                        <option value="None"></option>
                         <option value="Left Message">Left Message</option>
                         <option value="Number Disconnected">Number Disconnected</option>
-                        <option value="noVoicemail">No Voicemail</option>
-                        <option value="wrong number">Wrong Number</option>
+                        <option value="No Voicemail">No Voicemail</option>
+                        <option value="Wrong Number">Wrong Number</option>
                     </select>
                 </div>
             </div>
@@ -444,9 +142,9 @@
                             <section>
                                 <form id="interviewRelated">
                                     <label for="interviewName">Name of Person Interviewed:</label>
-                                    <input type=text name="interviewName" id="interviewName">
+                                    <input type="text" name="interviewName" id="interviewName">
                                     <label for="dateIntv">Date of Interview:</label>
-                                    <input id="dateIntv" type=date name="dateIntv">
+                                    <input id="dateIntv" type="date" name="dateIntv">
                                     <br>
                                     <label type="radio" for="addYes" name="address">Address Correct on Application:   Yes</label>
                                     <input type="radio" id="addYes" name="address" onclick="hideIt('address1', this)">
@@ -454,7 +152,7 @@
                                     <input type="radio" id="addNo" name="address" onclick="showMe('address1', this)">
                                     <div id="address1" style="display:none">
                                         <br>
-                                        <label type="text" for="address" name="address">Current Address:</label>
+                                        <label type="text" for="addAns" name="address">Current Address:</label>
                                         <input type="text" id="addAns" name="address" style="width: 500px;">
                                     </div>
                                     <br>
@@ -464,12 +162,13 @@
                                     <input type="radio" id="phoneNo" name="phone" onclick="showMe('phone1', this)">
                                     <div id="phone1" style="display:none">
                                         <br>
-                                        <label type="text" for="currPhone" name="phone">Current Phone:</label>
+                                        <label type="text" for="phoneAns" name="phone">Current Phone:</label>
                                         <input type="tel"  id="phoneAns" name="phone">
                                     </div>
                                     <br>
-                                    <label margin=0>Reviewed </label>
-                                    <a href='images/es2064-adobe11.pdf' target="_blank" class='inlineLink'>"Rights and Responsibilities"</a>
+                                    <div id="randr">
+                                    <label margin="0">Reviewed </label>
+                                    <a href="images/es2064-adobe11.pdf" target="_blank" class="inlineLink">"Rights and Responsibilities"</a>
                                     <label class="inlineLabel"> with customer:</label>
                                     <label type="radio" for="reviewRRYes" name="reviewRR">Yes</label>
                                     <input type="radio" id="reviewRRYes" name="reviewRR" value="yes">
@@ -477,8 +176,9 @@
                                     <input type="radio" id="reviewRRNo" name="reviewRR" value="no" onclick="showMe('rrWhyNot', this)">
                                     <div id="rrWhyNot" style="display:none">
                                             <br>
-                                            <textarea type=textarea id="rrWhyNotDis" placeholder="Discuss why 'Rights and Responsibilities' were not reviewed." rows="4"  onkeyup="auto_grow(this)"></textarea>
+                                            <textarea type="textarea" id="rrWhyNotDis" placeholder="Discuss why 'Rights and Responsibilities' were not reviewed." rows="4"  onkeyup="auto_grow(this)"></textarea>
                                         </div>
+                                    </div>
                                 </form>
                             </section>
 
@@ -489,19 +189,20 @@
                             <section>
                                 <form id="commonCLRC">
                                     <label for="accessNum">ACCESS Number:</label>
-                                    <input type=text id="accessNum" name="Access Number" required>
+                                    <input type="number" maxlength="9" id="accessNum" name="Access Number">
                                     <label for="dateApp">Date of Application:</label>
-                                    <input type=date id="dateApp">
+                                    <input type="date" id="dateApp">
                                     <br>
                                     <table id="hhCompTable">
                                         <caption>Household Composition and Individual Information</caption>
+                                        <tbody id=hhCompTableBod>
                                         <tr id="hhCompHeader">
                                             <th>HH Member Name</th>
                                             <th>Age</th>
                                             <th>Applying</th>
-                                            <th class= "PPCheck" align="center" style="display: none">P&P</th>
+                                            <th class= "PPCheck" align="center" >P&amp;P</th>
                                             <th>Disq/Sanx.</th>
-                                            <th class= "disabledCheck" style="display: none">Disabled</th>
+                                            <th class= "disabledCheck">Disabled</th>
                                             <th>Add Member</th>
                                         </tr>
                                         <tr id="hhMem1">
@@ -514,308 +215,103 @@
                                             <td align="center">
                                                 <input type="checkbox" id="apply1">
                                             </td>
-                                            <td class= "PPCheck" align="center" style="display: none">
+                                            <td class= "PPCheck" align="center">
                                                 <input type="checkbox" id="pandp1">
                                             </td>
                                             <td align="center">
-                                                <input type="checkbox" id="disq1">
+                                                <input type="checkbox" id="disq1" onclick="showMe('sanction1', this)">
                                             </td>
-                                            <td class= "disabledCheck" align="center" style="display: none">
+                                            <td class= "disabledCheck" align="center">
                                                 <input type="checkbox" id="disab1" >
                                             </td>
                                             <td align="center">
-                                                <input type="checkbox" id="add1" onclick="showRows('hhMem2')">
+                                                <input type="button" id="add1" value="Add" onclick="newHHMember();">
                                             </td>
                                         </tr>
-                                        <tr id="hhMem2" style="display: none">
-                                            <td align="center">
-                                                <input type="text" id="name2">
-                                            </td>
-                                            <td align="center">
-                                                <input type="number" id="age2">
-                                            </td>
-                                            <td align="center">
-                                                <input type="checkbox" id="apply2">
-                                            </td>
-                                            <td class= "PPCheck" align="center" style="display: none">
-                                                <input type="checkbox" id="pandp2">
-                                            </td>
-                                            <td align="center">
-                                                <input type="checkbox" id="disq2">
-                                            </td>
-                                            <td class= "disabledCheck" align="center" style="display: none">
-                                                <input type="checkbox" id="disab2">
-                                            </td>
-                                            <td align="center">
-                                                <input type="checkbox" id="add2" onclick="showRows('hhMem3')">
-                                            </td>
-                                        </tr>
-                                        <tr id="hhMem3" style="display:none">
-                                            <td align="center">
-                                                <input type="text" id="name3">
-                                            </td>
-                                            <td align="center">
-                                                <input type="number" id="age3">
-                                            </td>
-                                            <td align="center">
-                                                <input type="checkbox" id="apply3">
-                                            </td>
-                                            <td class= "PPCheck" align="center" style="display: none">
-                                                <input type="checkbox" id="pandp3">
-                                            </td>
-                                            <td align="center">
-                                                <input type="checkbox" id="disq3">
-                                            </td>
-                                            <td class= "disabledCheck" align="center" style="display: none">
-                                                <input type="checkbox" id="disab3">
-                                            </td>
-                                            <td align="center">
-                                                <input type="checkbox" id="add3" onclick="showRows('hhMem4')">
-                                            </td>
-                                        </tr>
-                                        <tr id="hhMem4" style="display:none">
-                                            <td align="center">
-                                                <input type="text" id="name4">
-                                            </td>
-                                            <td align="center">
-                                                <input type="number" id="age4">
-                                            </td>
-                                            <td align="center">
-                                                <input type="checkbox" id="apply4">
-                                            </td>
-                                            <td class= "PPCheck" align="center" style="display: none">
-                                                <input type="checkbox" id="pandp4">
-                                            </td>
-                                            <td align="center">
-                                                <input type="checkbox" id="disq4">
-                                            </td>
-                                            <td class= "disabledCheck" align="center" style="display: none">
-                                                <input type="checkbox" id="disab4">
-                                            </td>
-                                            <td align="center">
-                                                <input type="checkbox" id="add4" onclick="showRows('hhMem5')">
-                                            </td>
-                                        </tr>
-                                        <tr id="hhMem5" style="display:none">
-                                            <td align="center">
-                                                <input type="text" id="name5">
-                                            </td>
-                                            <td align="center">
-                                                <input type="number" id="age5">
-                                            </td>
-                                            <td align="center">
-                                                <input type="checkbox" id="apply5">
-                                            </td>
-                                            <td class= "PPCheck" align="center" style="display: none">
-                                                <input type="checkbox" id="pandp5">
-                                            </td>
-                                            <td align="center">
-                                                <input type="checkbox" id="disq5">
-                                            </td>
-                                            <td class= "disabledCheck" align="center" style="display: none">
-                                                <input type="checkbox" id="disab5">
-                                            </td>
-                                            <td align="center">
-                                                <input type="checkbox" id="add5" onclick="showRows('hhMem6')">
-                                            </td>
-                                        </tr>
-                                        <tr id="hhMem6" style="display:none">
-                                            <td align="center">
-                                                <input type="text" id="name6">
-                                            </td>
-                                            <td align="center">
-                                                <input type="number" id="age6">
-                                            </td>
-                                            <td align="center">
-                                                <input type="checkbox" id="apply6">
-                                            </td>
-                                            <td class= "PPCheck" align="center" style="display: none">
-                                                <input type="checkbox" id="pandp6">
-                                            </td>
-                                            <td align="center">
-                                                <input type="checkbox" id="disq6">
-                                            </td>
-                                            <td class= "disabledCheck" align="center" style="display: none">
-                                                <input type="checkbox" id="disab6">
-                                            </td>
-                                            <td align="center">
-                                                <input type="checkbox" id="add6" onclick="showRows('hhMem7')">
-                                            </td>
-                                        </tr>
-                                        <tr id="hhMem7" style="display:none">
-                                            <td align="center">
-                                                <input type="text" id="name7">
-                                            </td>
-                                            <td align="center">
-                                                <input type="number" id="age7">
-                                            </td>
-                                            <td align="center">
-                                                <input type="checkbox" id="apply7">
-                                            </td>
-                                            <td class= "PPCheck" align="center" style="display: none">
-                                                <input type="checkbox" id="pandp7">
-                                            </td>
-                                            <td align="center">
-                                                <input type="checkbox" id="disq7">
-                                            </td>
-                                            <td class= "disabledCheck" align="center" style="display: none">
-                                                <input type="checkbox" id="disab7">
-                                            </td>
-                                            <td align="center">
-                                                <input type="checkbox" id="add7" onclick="showRows('hhMem8')">
-                                            </td>
-                                        </tr>
-                                        <tr id="hhMem8" style="display:none">
-                                            <td align="center">
-                                                <input type="text" id="name8">
-                                            </td>
-                                            <td align="center">
-                                                <input type="number" id="age8">
-                                            </td>
-                                            <td align="center">
-                                                <input type="checkbox" id="apply8">
-                                            </td>
-                                            <td class= "PPCheck" align="center" style="display: none">
-                                                <input type="checkbox" id="pandp8">
-                                            </td>
-                                            <td align="center">
-                                                <input type="checkbox" id="disq8">
-                                            </td>
-                                            <td class= "disabledCheck" align="center" style="display: none">
-                                                <input type="checkbox" id="disab8">
-                                            </td>
-                                            <td align="center">
-                                                <input type="checkbox" id="add8" onclick="showRows('hhMem9')">
-                                            </td>
-                                        </tr>
-                                        <tr id="hhMem9" style="display:none">
-                                            <td align="center">
-                                                <input type="text" id="name9">
-                                            </td>
-                                            <td align="center">
-                                                <input type="number" id="age9">
-                                            </td>
-                                            <td align="center">
-                                                <input type="checkbox" id="apply9">
-                                            </td>
-                                            <td class= "PPCheck" align="center" style="display: none">
-                                                <input type="checkbox" id="pandp9">
-                                            </td>
-                                            <td align="center">
-                                                <input type="checkbox" id="disq9">
-                                            </td>
-                                            <td class= "disabledCheck" align="center" style="display: none">
-                                                <input type="checkbox" id="disab9">
-                                            </td>
-                                            <td align="center">
-                                                <input type="checkbox" id="add9" onclick="showRows('hhMem10')">
-                                            </td>
-                                        </tr>
-                                        <tr id="hhMem10" style="display:none">
-                                            <td align="center">
-                                                <input type="text" id="name10">
-                                            </td>
-                                            <td align="center">
-                                                <input type="number" id="age10">
-                                            </td>
-                                            <td align="center">
-                                                <input type="checkbox" id="apply10">
-                                            </td>
-                                            <td align="center">
-                                                <input type="checkbox" id="pandp10">
-                                            </td>
-                                            <td class= "PPCheck" align="center" style="display: none">
-                                                <input type="checkbox" id="disq10">
-                                            </td>
-                                            <td class= "disabledCheck" align="center" style="display: none">
-                                                <input type="checkbox" id="disab10">
-                                            </td>
-                                            <td align="center">
-                                                <input type="checkbox" id="add10" onclick="alert('Include any additional members in Additional Comment section.')">
-                                            </td>
-                                        </tr>
+                                    </tbody>
                                     </table>
+                                    <br>
+                                    <textarea type="textarea" name="idVerif" placeholder="Explain relationship for all members listed above." rows="4"  onkeyup="auto_grow(this)"></textarea>
+                                    <br>
 
                                     <label type="select" for="typeEligDet">Type of eligibility determination completed:</label>
-                                    <select id="typeEligDet" name="typeEligDet" onfocus="createArray(); abawdData (); getabawdName ('A', abawdMembList);">
-                                                <option value="none"></option>
-                                                <option value="application">Application</option>
-                                                <option value="review">Review</option>
-                                                <option value="addAsst">Additional Assistance</option>
-                                            </select>
+                                    <select id="typeEligDet" name="typeEligDet" onfocus="createArray(); abawdData(); getabawdName ('A', abawdMembList);">
+                                        <option value="none"></option>
+                                        <option value="application">Application</option>
+                                        <option value="review">Review</option>
+                                        <option value="addAsst">Additional Assistance</option>
+                                    </select>
                                     <br>
-                                    <label type="select" for="typeRevwComp">Type of review  completed:</label>
+                                    <label type="select" for="typeRevwComp">Type of review or interview completed:</label>
                                     <select id="typeRevwComp" name="typeRevwComp">
-                                                <option value="none"></option>
-                                                <option value="active">Active</option>
-                                                <option value="ABAWD">ABAWD/Potential ABAWD</option>
-                                                <option value="red">Red</option>
-                                                <option value="passive">Passive</option>
-                                                <option value="interim">Interim Contact</option>
-                                            </select>
+                                        <option value="none"></option>
+                                        <option value="active">Active</option>
+                                        <option value="ABAWD">ABAWD/Potential ABAWD</option>
+                                        <option value="red">Red</option>
+                                        <option value="passive">Passive</option>
+                                        <option value="interim">Interim Contact</option>
+                                    </select>
                                     <br>
-                                    <label type="select" for="nextRvw">Next review type:</label>
+                                    <label type="select" for="nextRvw">Next review or interview type:</label>
                                     <select id="nextRvw" name="nextRvw">
-                                                <option value="none"></option>
-                                                <option value="Active">Active</option>
-                                                <option value="ABAWD">ABAWD/Potential ABAWD</option>
-                                                <option value="Red">Red</option>
-                                                <option value="Passive">Passive</option>
-                                                <option value="Interim">Interim Contact</option>
-                                            </select>
-                                    <br>
-                                    <textarea type=textarea name="idVerif" placeholder="Indicate if Identity was verified or not.  Provide details on how ID was verified or if it was not, why and detail any pending information needed." rows="4"  onkeyup="auto_grow(this)"></textarea>
+                                        <option value="none"></option>
+                                        <option value="Active">Active</option>
+                                        <option value="ABAWD">ABAWD/Potential ABAWD</option>
+                                        <option value="Red">Red</option>
+                                        <option value="Passive">Passive</option>
+                                        <option value="Interim">Interim Contact</option>
+                                    </select>
                                     <br>
                                     <a href="http://eww.dcf.state.fl.us/ess/training/docs/Customer%20Authentication%20Question%20Bank.pdf" target="_blank" >Customer Authentication:</a>
                                     <select id="authent" onchange="authentCheck();">
-                                                <option value="none"></option>
-                                                <option value="Automatic">Automatic</option>
-                                                <option value="Manual">Manual</option>
-                                                <option value="No">No</option>
-                                            </select>
+                                        <option value="none"></option>
+                                        <option value="Automatic">Automatic</option>
+                                        <option value="Manual">Manual</option>
+                                        <option value="No">No</option>
+                                    </select>
                                     <br>
-                                    <textarea type=textarea id="authenDisc" name="authenDisc" placeholder="If 'Manual' explain exactly how authentication was completed.  If 'No' explain why and detail any pending information needed." rows="4"  style="display:none" onkeyup="auto_grow(this)"></textarea>
+                                    <textarea type="textarea" id="authenDisc" name="authenDisc" placeholder="If 'Manual' explain exactly how authentication was completed.  If 'No' explain why and detail any pending information needed." rows="4"  style="display:none" onkeyup="auto_grow(this)"></textarea>
                                     <br>
                                     <label type="radio" for="citzYes" >Everyone in the HH US Citizens:   Yes</label>
-                                    <input type="radio" id="citzYes" value=Yes name="citizen" onclick="hideIt('citizen1', this)">
+                                    <input type="radio" id="citzYes" value="Yes" name="citizen" onclick="hideIt('citizen1', this)">
                                     <label type="radio" for="citzNo" >No</label>
-                                    <input type="radio" id="citzNo" value=No name="citizen" onclick="showMe('citizen1', this)">
+                                    <input type="radio" id="citzNo" value="No" name="citizen" onclick="showMe('citizen1', this)">
                                     <div id="citizen1" style="display:none">
                                         <br>
-                                        <textarea type=textarea id="nonCitizen" placeholder="If there are any non-US citizens enter name, USCIS status and number of individual, if available.  Specify if SAVE is needed.  If any documentation is available at the interview, explain." rows="4"  onkeyup="auto_grow(this)"></textarea>
+                                        <textarea type="textarea" id="nonCitizen" placeholder="If there are any non-US citizens enter name, USCIS status and number of individual, if available.  Specify if SAVE is needed.  If any documentation is available at the interview, explain." rows="4"  onkeyup="auto_grow(this)"></textarea>
                                     </div>
                                     <div id="sanction1" style="display:none">
                                         <br>
-                                        <textarea type=textarea id="sanction" placeholder="Identify the disqualified or sanctioned member(s) and discuss the type of sanction, pend for cooperation if applicable.  If there is an E&T sanction, must review for any potential exemptions, exceptions, or good cause.  Must document that this review was completed."
-                                            rows="4"  onkeyup="auto_grow(this)"></textarea>
+                                        <label type="textarea" id="sanctionTxt" for="sanction">Disqualified/Sanctioned:</label>
+                                        <textarea type="textarea" id="sanction" placeholder="Identify the disqualified or sanctioned member(s) and discuss the type of sanction, pend for cooperation if applicable.  If there is an E&amp;T sanction, must review for any potential exemptions, exceptions, or good cause.  Must document that this review was completed." rows="4" onkeyup="auto_grow(this)"></textarea>
                                     </div>
                                     <br>
-                                    <label type="radio" for="ncpYes" name="ncp">Obtained all NCP demographic information:    Yes</label>
+                                    <label type="radio" for="ncpYes" name="ncp">All NCP demographic information correct on application:    Yes</label>
                                     <input type="radio" id="ncpYes" value=Yes name="ncp" onclick="hideIt('ncpDet', this)">
                                     <label type="radio" for="ncpNo" name="ncp">No</label>
-                                    <input type="radio" id="ncpNo" value=No name="ncp" onclick="showMe('ncpDet', this)">
+                                    <input type="radio" id="ncpNo" value="No" name="ncp" onclick="showMe('ncpDet', this)">
                                     <label type="radio" for="ncpNA">N/A</label>
                                     <input type="radio" id="ncpNA" name="ncp" value="NA" onclick="hideIt('ncpDet', this)">
 
                                     <div id="ncpDet" style="display:none">
                                         <br>
-                                        <textarea type=textarea id="ncpDetail" placeholder="Explain why NCP details were not provided or available." rows="4"  onkeyup="auto_grow(this)"></textarea>
+                                        <textarea type="textarea" id="ncpDetail" placeholder="Provide NCP details not reported on application or explain why NCP details were not provided or available." rows="4"  onkeyup="auto_grow(this)"></textarea>
                                     </div>
                                     <br>
                                     <label type="textarea" id="assets" for="assetDisc">Assets:</label>
-                                    <textarea class="householdDisc" type=textarea name="assetDisc" id="assetDisc" rows="4"  display="block" placeholder="Include a discussion of assets belonging to each member of the Standard Filing Unit (SFU)." onkeyup="auto_grow(this)"></textarea>
+                                    <textarea class="householdDisc" type="textarea" name="assetDisc" id="assetDisc" rows="4"  display="block" placeholder="Include a discussion of assets belonging to each member of the Standard Filing Unit (SFU)." onkeyup="auto_grow(this)"></textarea>
                                     <br>
                                     <label type="textarea" id="earnedIncome" for="earnedIncomeDisc">Earned Income:</label>
-                                    <textarea class="householdDisc" type=textarea name="earnedIncomeDisc" id="earnedIncomeDisc" rows="4"  placeholder="Specify the employer for each member as appropriate and include details on hours worked and update on AFEI if needed.  Document any non-representative income or any other discrepancies from the application." onkeyup="auto_grow(this)"></textarea>
+                                    <textarea class="householdDisc" type="textarea" name="earnedIncomeDisc" id="earnedIncomeDisc" rows="4"  placeholder="Specify the employer for each member as appropriate and include details on hours worked and update on AFEI if needed.  Document any non-representative income or any other discrepancies from the application." onkeyup="auto_grow(this)"></textarea>
                                     <br>
                                     <label type="textarea" id="unearnedIncome" for="unearnedIncomeDisc">Unearned Income:</label>
-                                    <textarea class="householdDisc" type=textarea name="unearnedIncomeDisc" id="unearnedIncomeDisc" rows="4"  placeholder="Include details on the type, source and frequency.  Document any non-representative income or any other discrepancies from the application." onkeyup="auto_grow(this)"></textarea>
+                                    <textarea class="householdDisc" type="textarea" name="unearnedIncomeDisc" id="unearnedIncomeDisc" rows="4"  placeholder="Include details on the type, source and frequency.  Document any non-representative income or any other discrepancies from the application." onkeyup="auto_grow(this)"></textarea>
                                     <br>
                                     <label type="textarea" id="expenses" for="expensesDisc">HH Expenses:</label>
-                                    <textarea class="householdDisc" type=textarea name="expensesDisc" id="expensesDisc" rows="4"  placeholder="Discuss shelter, utilities, method of heating and cooling, medical, as well as any miscellaneous expenses and the payer of each.  Document any discrepancies from the application." onkeyup="auto_grow(this)"></textarea>
+                                    <textarea class="householdDisc" type="textarea" name="expensesDisc" id="expensesDisc" rows="4"  placeholder="Discuss shelter, utilities, method of heating and cooling, medical, as well as any miscellaneous expenses and the payer of each.  Document any discrepancies from the application." onkeyup="auto_grow(this)"></textarea>
                                     <br>
                                     <label type="textarea" id="management" for="managementDisc">Management:</label>
-                                    <textarea class="householdDisc" type=textarea name="managementDisc" id="managementDisc" rows="4"  placeholder="Is the SFU able to meet reported expenses with income discussed?  If not, include a discussion on how Management is being met." onkeyup="auto_grow(this)"></textarea>
+                                    <textarea class="householdDisc" type="textarea" name="managementDisc" id="managementDisc" rows="4"  placeholder="Is the SFU able to meet reported expenses with income discussed?  If not, include a discussion on how Management is being met." onkeyup="auto_grow(this)" onfocus="createDDD()"></textarea>
                                 </form>
                             </section>
                         </td>
@@ -830,235 +326,165 @@
                                     <input type="radio" id="collegeYes" name="college" value="Yes" onclick="showMe('collegeDesc', this)">
                                     <label type="radio" for="collegeNo" name="college">No</label>
                                     <input type="radio" id="collegeNo" name="college" value="No" onclick="hideIt('collegeDesc', this)">
-                                    <textarea type=textarea name="collegeDesc" id="collegeDesc" rows="1"  placeholder="Enter the name of the student, school, enrollment status (Full or Half time), and any exemptions." style="display: none;" onkeyup="auto_grow(this)"></textarea>
+                                    <textarea type="textarea" name="collegeDesc" id="collegeDesc" rows="1"  placeholder="Enter the name of the student, school, enrollment status (Full or Half time), and any exemptions." style="display: none;" onkeyup="auto_grow(this)"></textarea>
                                     <br>
                                     <label type="radio" for="drugYes" name="trafficking">Has anyone been convicted of Drug Trafficking: Yes</label>
                                     <input type="radio" id="drugYes" name="trafficking" value="Yes" onclick="showMe('trafficDesc', this)">
                                     <label type="radio" for="drugNo" name="trafficking">No</label>
                                     <input type="radio" id="drugNo" value="No" name="trafficking" onclick="hideIt('trafficDesc', this)">
-                                    <textarea type=textarea name="trafficDesc" id="trafficDesc" rows="1"  placeholder="Enter the name of the individual(s) and the conviction date." style="display: none;" onkeyup="auto_grow(this)"></textarea>
+                                    <textarea type="textarea" name="trafficDesc" id="trafficDesc" rows="1"  placeholder="Enter the name of the individual(s) and the conviction date." style="display: none;" onkeyup="auto_grow(this)"></textarea>
                                     <br>
                                     <label type="radio" for="fleeFelonYes" name="fleeFelon">Is anyone a Fleeing Felon: Yes</label>
                                     <input type="radio" id="fleeFelonYes" name="fleeFelon" value="Yes" onclick="showMe('fleeFelonDesc', this)">
                                     <label type="radio" for="fleeFelonNo" name="fleeFelon">No</label>
                                     <input type="radio" id="fleeFelonNo" value="No" name="fleeFelon" onclick="hideIt('fleeFelonDesc', this)">
-                                    <textarea type=textarea name="fleeFelon" id="fleeFelonDesc" rows="1"  placeholder="Enter the name of the individual(s)." style="display: none;" onkeyup="auto_grow(this)"></textarea>
+                                    <textarea type="textarea" name="fleeFelon" id="fleeFelonDesc" rows="1"  placeholder="Enter the name of the individual(s)." style="display: none;" onkeyup="auto_grow(this)"></textarea>
                                     <br>
-                                    <label type="radio" for="potenABAWDYes" name="potenABAWD">Is anyone in the household a potential ABAWD: Yes</label>
-                                    <input type="radio" id="potenABAWDYes" name="potenABAWD" value="Yes" onclick="showMe('potenABAWDDesc', this)">
-                                    <label type="radio" for="potenABAWDNo" name="potenABAWD">No</label>
-                                    <input type="radio" id="potenABAWDNo" value="No" name="potenABAWD" onclick="hideIt('potenABAWDDesc', this)">
+                                    <div id="ABAWDStateSect" style="display: none">
+                                    <label margin="0">Were </label>
+                                    <a href="images/ABAWDStatement.pdf" target="_blank" class="inlineLink">time limits, ABAWD work requirements, and exclusions</a>
+                                    <label class="inlineLabel"> explained to the customer:</label>
+                                    <label type="radio" for="ABAWDStateYes" name="ABAWDStatement">Yes</label>
+                                    <input type="radio" id="ABAWDStateYes" name="ABAWDStatement" value="Yes" onclick="hideIt('ABAWDStatExpl', this)">
+                                    <label type="radio" for="ABAWDStateNo" name="ABAWDStatement">No</label>
+                                    <input type="radio" id="ABAWDStateNo" value="No" name="ABAWDStatement" onclick="showMe('ABAWDStatExpl', this)">
                                     <br>
-                                    <label>(check case for upcoming changes that might affect any exemptions or exceptions for all members)</label>
-                                    <div id="potenABAWDDesc" style="display: none;">
-                                        <textarea type=textarea name="potenABAWD"  placeholder="Enter the name of the individual(s).  Review time limits, ABAWD work requirements and how to meet them, as well as penalties for failure to comply." onkeyup="auto_grow(this)"></textarea>
-                                        <label type="radio" for="understandYes" name="understand">Did the customer state they understood these requirements: Yes</label>
-                                        <input type="radio" id="understandYes" name="understand" value="Yes"  onclick="hideIt('understandDisc', this)">
-                                        <label type="radio" for="understandNo" name="understand">No</label>
-                                        <input type="radio" id="understandNo" value="No" name="understand" onclick="showMe('understandDisc', this)">
-                                        <textarea type=textarea name="understand" id='understandDisc'  placeholder="Explain what the customer states that they did not understand." style="display: none;" onkeyup="auto_grow(this)"></textarea>
+                                        <div id="ABAWDStatExpl" style="display: none;">
+                                            <textarea type="textarea" name="ABAWDStatementExpl" id="ABAWDStatExplTxt"  placeholder="Explain why time limits, ABAWD work requirements, and exclusions were not explained to the customer." onkeyup="auto_grow(this)"></textarea>
+                                        </div>
                                     </div>
 
-                                    <div id='abawdStuff' style="display:none">
-                                        <div id='abawdDivA0' style="display: none">
+                                    <div id="abawdStuff" style="display:none">
+                                        <div id="abawdDivA0" style="display: none">
                                             <br>
-                                            <p class="abawdLabel" id="abawdDisa">Is anyone in the household receiving or has a pending application for SSI or SSDI or some other type of disability benefits (temporary or permanent) <strong>(AGPI 09)</strong>:</p>
-                                            <label type="checkbox" for="abawdAName0" id='abawdALabel0'></label>
-                                            <input type="checkbox" id="abawdAName0" onclick="showMe('disabTempPerm', this)">
-                                        </div>
-                                        <div id='abawdDivA1' style="display: none">
-                                            <label type="checkbox" for="abawdAName1" id='abawdALabel1'></label>
-                                            <input type="checkbox" id="abawdAName1" onclick="showMe('disabTempPerm', this)">
-                                        </div>
-                                        <div id='abawdDivA2' style="display: none">
-                                            <label type="checkbox" for="abawdAName2" id='abawdALabel2'></label>
-                                            <input type="checkbox" id="abawdAName2" onclick="showMe('disabTempPerm', this)">
+                                            <p class="abawdLabel" id="abawdDisa">Is anyone in the household receiving SSI or SSDI <strong>(AGPI 09)</strong>:</p>
                                         </div>
                                         <div id="abawdANextDiv" style="display: none">
-                                            <input type="button" id="abawdDisaNext" onclick="abawdData (); buildAbawdArray('A','B', abawdMembList, abawdAList); getabawdName('B', abawdAList); checkMoreAbawd(abawdAList);" value="Update">
-                                        </div>
-                                        <div id="disabTempPerm" style="display:none">
-                                            <textarea type=textarea id="disabTempPermAns" name="disabLength"  placeholder="Is disability temporary or permanent?" onkeyup="auto_grow(this)"></textarea>
+                                            <input type="button" id="abawdDisaNext" onclick="abawdData(); buildAbawdArray('A','B', abawdMembList, abawdAList); getabawdName('B', abawdAList); checkMoreAbawd(abawdAList);" value="No/Next">
                                         </div>
 
-                                        <div id='abawdDivB0' style="display: none">
+                                        <div id="abawdDivB0" style="display: none">
                                             <br>
                                             <p class="abawdLabel" id="abawdCare">Is anyone in the household providing care for an incapacitated person <strong>(AGPI 64)</strong>:</p>
-                                            <label type="checkbox" for="abawdBName0" id='abawdBLabel0'></label>
+                                            <label type="checkbox" for="abawdBName0" id="abawdBLabel0"></label>
                                             <input type="checkbox" id="abawdBName0" onclick="showMe('whoCareFor', this)">
                                         </div>
-                                        <div id='abawdDivB1' style="display: none">
-                                            <label type="checkbox" for="abawdBName1" id='abawdBLabel1'></label>
-                                            <input type="checkbox" id="abawdBName1" onclick="showMe('whoCareFor', this)">
-                                        </div>
-                                        <div id='abawdDivB2' style="display: none">
-                                            <label type="checkbox" for="abawdBName2" id='abawdBLabel2'></label>
-                                            <input type="checkbox" id="abawdBName2" onclick="showMe('whoCareFor', this)">
-                                        </div>
                                         <div id="abawdBNextDiv" style="display: none">
-                                            <input type="button" id="abawdCareNext" onclick="buildAbawdArray('B','C', abawdAList, abawdBList); getabawdName('C', abawdBList); checkMoreAbawd(abawdBList);" value="Update">
+                                            <input type="button" id="abawdCareNext" onclick="buildAbawdArray('B','C', abawdAList, abawdBList); getabawdName('C', abawdBList); checkMoreAbawd(abawdBList);" value="No/Next">
                                         </div>
-                                        <div id="whoCareFor" style="display:none">
-                                            <textarea type=textarea id="whoCareForAns" name="whoCare"  placeholder="Who is care provided for?" onkeyup="auto_grow(this)"></textarea>
+                                        <div id="abawdBBonus" style="display:none">
+                                            <textarea type="textarea" id="whoCareForAns" name="whoCare"  placeholder="Who is providing care and to whom is care provided?" onkeyup="auto_grow(this)"></textarea>
                                         </div>
     
-
-                                        <div id='abawdDivC0' style="display: none">
+                                        <div id="abawdDivC0" style="display: none">
                                             <br>
                                             <p class="abawdLabel">Is anyone in the household receiving or has recently applied for Unemployment Compensation Benefits <strong>(AGPI 08)</strong>:</p>
-                                            <label type="checkbox" for="abawdCName0" id='abawdCLabel0'></label>
+                                            <label type="checkbox" for="abawdCName0" id="abawdCLabel0"></label>
                                             <input type="checkbox" id="abawdCName0">
                                         </div>
-                                        <div id='abawdDivC1' style="display: none">
-                                            <label type="checkbox" for="abawdCName1" id='abawdCLabel1'></label>
-                                            <input type="checkbox" id="abawdCName1">
-                                        </div>
-                                        <div id='abawdDivC2' style="display: none">
-                                            <label type="checkbox" for="abawdCName2" id='abawdCLabel2'></label>
-                                            <input type="checkbox" id="abawdCName2">
-                                        </div>
                                         <div id="abawdCNextDiv" style="display: none">
-                                            <input type="button" id="abawdDepNext" onclick="buildAbawdArray('C','D', abawdBList, abawdCList); getabawdName('D', abawdCList); checkMoreAbawd(abawdCList);" value="Update">
+                                            <input type="button" id="abawdDepNext" onclick="buildAbawdArray('C','D', abawdBList, abawdCList); getabawdName('D', abawdCList); checkMoreAbawd(abawdCList);" value="No/Next">
                                         </div>
 
-                                        <div id='abawdDivD0' style="display: none">
+                                        <div id="abawdDivD0" style="display: none">
                                             <br>
                                             <p class="abawdLabel" id="abawdDrugT">Is anyone in the household a regular participant in a Drug/Alcohol treatment program (Alcoholics Anonymous and Narcotics Anonymous do not qualify) <strong>(AGPI 10)</strong>:</p>
-                                            <label type="checkbox" for="abawdDName0" id='abawdDLabel0'></label>
-                                            <input type="checkbox" id="abawdDName0">
-                                        </div>
-                                        <div id='abawdDivD1' style="display: none">
-                                            <label type="checkbox" for="abawdDName1" id='abawdDLabel1'></label>
-                                            <input type="checkbox" id="abawdDName1">
-                                        </div>
-                                        <div id='abawdDivD2' style="display: none">
-                                            <label type="checkbox" for="abawdDName2" id='abawdDLabel2'></label>
-                                            <input type="checkbox" id="abawdDName2">
+                                            <label type="checkbox" for="abawdDName0" id="abawdDLabel0"></label>
+                                            <input type="checkbox" id="abawdDName0" onclick="showMe('whereTreated', this)">
                                         </div>
                                         <div id="abawdDNextDiv" style="display: none">
-                                            <input type="button" id="abawdDrugTNext" onclick="buildAbawdArray('D','E', abawdCList, abawdDList); getabawdName('E', abawdDList); checkMoreAbawd(abawdDList);" value="Update">
+                                            <input type="button" id="abawdDrugTNext" onclick="buildAbawdArray('D','E', abawdCList, abawdDList); getabawdName('E', abawdDList); checkMoreAbawd(abawdDList);" value="No/Next">
                                         </div>
-                                        
-                                        <div id='abawdDivE0' style="display: none">
+                                        <div id="abawdDBonus" style="display:none">
+                                            <textarea type="textarea" id="whereTreatedAns" name="whereTreated"  placeholder="Who is receiving treatment and what is the name of the program or facility?" onkeyup="auto_grow(this)"></textarea>
+                                        </div>
+    
+                                        <div id="abawdDivE0" style="display: none">
                                             <br>
                                             <p class="abawdLabel" id="abawdEmp30">Is anyone in the household employed, self-employed, volunteering, working minimum of <strong>30</strong> hours weekly or earning weekly wages at least equal to $<span id="incomeSpan"></span>. Can be paid or in-kind <strong>(AGPI 21)</strong>:</p>
-                                            <label type="checkbox" for="abawdEName0" id='abawdELabel0'></label>
+                                            <label type="checkbox" for="abawdEName0" id="abawdELabel0"></label>
                                             <input type="checkbox" id="abawdEName0">
                                         </div>
-                                        <div id='abawdDivE1' style="display: none">
-                                            <label type="checkbox" for="abawdEName1" id='abawdELabel1'></label>
-                                            <input type="checkbox" id="abawdEName1">
-                                        </div>
-                                        <div id='abawdDivE2' style="display: none">
-                                            <label type="checkbox" for="abawdEName2" id='abawdELabel2'></label>
-                                            <input type="checkbox" id="abawdEName2">
-                                        </div>
                                         <div id="abawdENextDiv" style="display: none">
-                                            <input type="button" id="abawdEmp30Next" onclick="buildAbawdArray('E','F', abawdDList, abawdEList); getabawdName('F', abawdEList); checkMoreAbawd(abawdEList); abawdHourChangeCheck();" value="Update">
+                                            <input type="button" id="abawdEmp30Next" onclick="buildAbawdArray('E','F', abawdDList, abawdEList); getabawdName('F', abawdEList); checkMoreAbawd(abawdEList); abawdHourChangeCheck(abawdDList);" value="No/Next">
                                         </div>
 
-                                        <div id='abawdDivF0' style="display: none">
+                                        <div id="abawdDivF0" style="display: none">
                                             <br>
                                             <p class="abawdLabel" id="abawdStu">Is anyone in the household a student enrolled at least half time in a recognized school, training program, or institute if higher education <strong>(AGPI 11)</strong>:</p>
-                                            <label type="checkbox" for="abawdFName0" id='abawdFLabel0'></label>
+                                            <label type="checkbox" for="abawdFName0" id="abawdFLabel0"></label>
                                             <input type="checkbox" id="abawdFName0">
                                         </div>
-                                        <div id='abawdDivF1' style="display: none">
-                                            <label type="checkbox" for="abawdFName1" id='abawdFLabel1'></label>
-                                            <input type="checkbox" id="abawdFName1">
-                                        </div>
-                                        <div id='abawdDivF2' style="display: none">
-                                            <label type="checkbox" for="abawdFName2" id='abawdFLabel2'></label>
-                                            <input type="checkbox" id="abawdFName2">
-                                        </div>
                                         <div id="abawdFNextDiv" style="display: none">
-                                            <input type="button" id="abawdStuNext" onclick="buildAbawdArray('F','G', abawdEList, abawdFList); getabawdName('G', abawdFList); checkMoreAbawd(abawdFList);" value="Update">
+                                            <input type="button" id="abawdStuNext" onclick="buildAbawdArray('F','G', abawdEList, abawdFList); getabawdName('G', abawdFList); checkMoreAbawd(abawdFList);" value="No/Next">
                                         </div>
 
-                                        
-                                        <div id='abawdDivG0' style="display: none">
+                                        <div id="abawdDivG0" style="display: none">
                                             <br>
-                                            <p class="abawdLabel" id="abawdUnfit">Is anyone in the household physically or mentally unfit for employment at the level of at least 20 hours per week, averaged monthly <strong>(AGPI 15)</strong>:</p>
-                                            <label type="checkbox" for="abawdGName0" id='abawdGLabel0'></label>
+                                            <p class="abawdLabel" id="abawdUnfit">Is anyone in the household physically or mentally unfit for employment at the level of at least 20 hours per week,  averaged monthly or pending for SSI/SSDI or some other type of disability (temporary or permanent) <strong>(AGPI 15)</strong>:</p>
+                                            <label type="checkbox" for="abawdGName0" id="abawdGLabel0"></label>
                                             <input type="checkbox" id="abawdGName0" onclick="showMe('unfitDur', this)">
                                         </div>
-                                        <div id='abawdDivG1' style="display: none">
-                                            <label type="checkbox" for="abawdGName1" id='abawdGLabel1'></label>
-                                            <input type="checkbox" id="abawdGName1" onclick="showMe('unfitDur', this)">
-                                        </div>
-                                        <div id='abawdDivG2' style="display: none">
-                                            <label type="checkbox" for="abawdGName2" id='abawdGLabel2'></label>
-                                            <input type="checkbox" id="abawdGName2" onclick="showMe('unfitDur', this)">
-                                        </div>
                                         <div id="abawdGNextDiv" style="display: none">
-                                            <input type="button" id="abawdUnfitNext" onclick="buildAbawdArray('G','H', abawdFList, abawdGList); getabawdName('H', abawdGList); checkMoreAbawd(abawdGList);" value="Update">
+                                            <input type="button" id="abawdUnfitNext" onclick="buildAbawdArray('G','H', abawdFList, abawdGList); getabawdName('H', abawdGList); checkMoreAbawd(abawdGList);" value="No/Next">
                                         </div>
-                                        <div id="unfitDur" style="display:none">
-                                            <textarea type=textarea id="unfitDurDate" name="unfitDurDate"  placeholder="What is the expected end date of the unfitness?" onkeyup="auto_grow(this)"></textarea>
+                                        <div id="abawdGBonus" style="display:none">
+                                            <textarea type="textarea" id="unfitDurDate" name="unfitDurDate"  placeholder="Who is the unfit individual and what is the expected end date of the unfitness?  Indicate if the member is pending for SSI/SSDI and the date of application, if applicable." onkeyup="auto_grow(this)"></textarea>
                                         </div>
 
-                                        
-                                        <div id='abawdDivH0' style="display: none">
+                                        <div id="abawdDivH0" style="display: none">
                                             <br>
                                             <p class="abawdLabel" id="abawdPreg">Is anyone in the household pregnant <strong>(AGPI 22)</strong>:</p>
-                                            <label type="checkbox" for="abawdHName0" id='abawdHLabel0'></label>
+                                            <label type="checkbox" for="abawdHName0" id="abawdHLabel0"></label>
                                             <input type="checkbox" id="abawdHName0">
                                         </div>
-                                        <div id='abawdDivH1' style="display: none">
-                                            <label type="checkbox" for="abawdHName1" id='abawdHLabel1'></label>
-                                            <input type="checkbox" id="abawdHName1">
-                                        </div>
-                                        <div id='abawdDivH2' style="display: none">
-                                            <label type="checkbox" for="abawdHName2" id='abawdHLabel2'></label>
-                                            <input type="checkbox" id="abawdHName2">
-                                        </div>
                                         <div id="abawdHNextDiv" style="display: none">
-                                            <input type="button" id="abawdPregNext" onclick="buildAbawdArray('H','I', abawdGList, abawdHList); getabawdName('I', abawdHList); checkMoreAbawd(abawdHList);" value="Update">
+                                            <input type="button" id="abawdPregNext" onclick="buildAbawdArray('H','I', abawdGList, abawdHList); getabawdName('I', abawdHList); checkMoreAbawd(abawdHList);" value="No/Next">
                                         </div>
 
-                                        
-                                        <div id='abawdDivI0' style="display: none">
+                                        <div id="abawdDivI0" style="display: none">
                                             <br>
                                             <p class="abawdLabel" id="abawdEmp20">Is anyone in the household employed, self-employed, or volunteering, working minimum of <strong>20</strong> hours weekly, averaged 80 hours monthly? Can be paid or in-kind. <strong>(AGPI 18 N)</strong>:</p>
-                                            <label type="checkbox" for="abawdIName0" id='abawdILabel0'></label>
-                                            <input type="checkbox" id="abawdIName0">
-                                        </div>
-                                        <div id='abawdDivI1' style="display: none">
-                                            <label type="checkbox" for="abawdIName1" id='abawdILabel1'></label>
-                                            <input type="checkbox" id="abawdIName1">
-                                        </div>
-                                        <div id='abawdDivI2' style="display: none">
-                                            <label type="checkbox" for="abawdIName2" id='abawdILabel2'></label>
-                                            <input type="checkbox" id="abawdIName2">
+                                            <label type="checkbox" for="abawdIName0" id="abawdILabel0"></label>
+                                            <input type="checkbox" id="abawdIName0" onclick="showMe('abawdHBonus', this)">
                                         </div>
                                         <div id="abawdINextDiv" style="display: none">
-                                            <input type="button" id="abawdINext" onclick="abawdHourChangeCheck(); buildAbawdMems(abawdHList);" value="Update">
+                                            <input type="button" id="abawdINext" onclick="abawdHourChangeCheck(abawdHList); buildAbawdMems(abawdHList);" value="No/Next">
+                                        </div>
+                                        <div id="abawdIBonus" style="display:none">
+                                            <textarea type="textarea" id="20HourDisc" name="20Hour"  placeholder="If the member is meeting this requirement by volunteering, enter the name of the member and a discussion of their volunteering.  Otherwise leave this section blank." onkeyup="auto_grow(this)"></textarea>
                                         </div>
 
                                         <div id="abawdWorking" style="display: none">
                                             <p class="abawdLabel" id="abawdHourChange">Was the customer advised that they must report if their weekly hours drop below 20 hours per week, averaged monthly:</p> 
-                                            <label type="radio" for="abawdHourChangeYes" id='abawdHourChange' name='abawdHrChange'>Yes</label>
-                                            <input type="radio" id="abawdHourChangeYes" name='abawdHrChange'>
-                                            <label type="radio" for="abawdHourChangeNo" id='abawdHourChange' name='abawdHrChange'>No</label>
-                                            <input type="radio" id="abawdHourChangeNo" name='abawdHrChange'>
+                                            <label type="radio" for="abawdHourChangeYes" id="abawdHourChange" name="abawdHrChange">Yes</label>
+                                            <input type="radio" id="abawdHourChangeYes" name="abawdHrChange">
+                                            <label type="radio" for="abawdHourChangeNo" id="abawdHourChange" name="abawdHrChange">No</label>
+                                            <input type="radio" id="abawdHourChangeNo" name="abawdHrChange">
 
                                         </div>
                                         <div id="abawdUsedTLDiv">
-                                                <label type="radio" for="abawdUsedTLYes" id='abawdUsedTL' name="abawdTimeLimit">If an ABAWD has used their time limited months were they informed how to regain eligibility:   Yes</label>
-                                                <input type="radio" id="abawdUsedTLYes" name="abawdTimeLimit">
-                                                <label type="radio" for="abawdUsedTLNo" id='abawdUsedTL' name="abawdTimeLimit">No</label>
-                                                <input type="radio" id="abawdUsedTLNo" name="abawdTimeLimit">
+                                                <label type="radio" for="abawdUsedTLYes" id="abawdUsedTL" name="abawdTimeLimit">Were all three time limited months used:    Yes</label>
+                                                <input type="radio" id="abawdUsedTLYes" name="abawdTimeLimit" onclick="showMe('abawdRegainQ', this)">
+                                                <label type="radio" for="abawdUsedTLNo" id="abawdUsedTL" name="abawdTimeLimit">No</label>
+                                                <input type="radio" id="abawdUsedTLNo" name="abawdTimeLimit" onclick="hideIt('abawdRegainQ', this)">
+
+                                            <div id="abawdRegainQ" style="display: none">
+                                                <label type="radio" for="abawdRegainYes" id="abawdRegainElg" name="abawdTimeLimit">Were they informed how to regain eligibility:   Yes</label>
+                                                <input type="radio" id="abawdRegainYes" name="abawdRegain">
+                                                <label type="radio" for="abawdRegainNo" id="abawdUsedTL" name="abawdTimeLimit">No</label>
+                                                <input type="radio" id="abawdRegainNo" name="abawdRegain">
+                                            </div>
                                         </div>
                                         <div id="abawdARFSDiv">
-                                            <label type="radio" for="abawdARFSYes" id='abawdARFS' name="abawdARFSUpd">Was ARFS reviewed and updated:   Yes</label>
+                                            <label type="radio" for="abawdARFSYes" id="abawdARFS" name="abawdARFSUpd">Was ARFS reviewed and updated:   Yes</label>
                                             <input type="radio" id="abawdARFSYes" name="abawdARFSUpd" onclick="showMe('arfsExplain', this)">
-                                            <label type="radio" for="abawdARFSNo" id='abawdARFS' name="abawdARFSUpd">No</label>
+                                            <label type="radio" for="abawdARFSNo" id="abawdARFS" name="abawdARFSUpd">No</label>
                                             <input type="radio" id="abawdARFSNo" name="abawdARFSUpd" onclick="hideIt('arfsExplain', this)">
-                                            <textarea type=textarea name="arfsExplain" id='arfsExplain' style="display: none"  placeholder="Explain how any discrepancies were resolved and how screen was updated." onkeyup="auto_grow(this)"></textarea>
+                                            <textarea type="textarea" name="arfsExplain" id="arfsExplain" style="display: none"  placeholder="Explain how any discrepancies were resolved and how screen was updated." onkeyup="auto_grow(this)"></textarea>
                                         </div>
 
                                     </div>
-
 
                                 </form>
                             </section>
@@ -1069,37 +495,50 @@
                             <section>
                                 <form id="medicaid">
                                     <label type="radio" for="retroYes" name="retroMedicaid">Retroactive Medicaid Requested: Yes</label>
-                                    <input type="radio" id="retroYes" value=yes name="retroMedicaid" onclick="showMe('retroMedicaid1', this)">
-                                    <label type="radio" for="retroNo" name="retroMedicaid" value=no>No</label>
-                                    <input type="radio" id="retroNo" name="retroMedicaid" value=no onclick="hideIt('retroMedicaid1', this)">
+                                    <input type="radio" id="retroYes" value="yes" name="retroMedicaid" onclick="showMe('retroMedicaid1', this)">
+                                    <label type="radio" for="retroNo" name="retroMedicaid" value="no">No</label>
+                                    <input type="radio" id="retroNo" name="retroMedicaid" value="no" onclick="hideIt('retroMedicaid1', this)">
                                     <br>
                                     <div id="retroMedicaid1" style="display:none">
                                         <label type="text" for="retroMedicaid" name="retroMedicaid"></label>
-                                        <input type=text name="retroMedicaid" placeholder="Enter member name and months requested." style="width: 500px;"></input>
+                                        <input type="text" name="retroMedicaid" placeholder="Enter member name and months requested." style="width: 500px;"></input>
                                     </div>
+
+                                    <div id="dddScreening" style="display:none">
+                                        <p type="text" for="recvDisab" name="disabScreen" display: "inline-block">Is anyone already receiving Supplemental Security Income (SSI) benefits or Social Security Disability (SSDI) benefits:</p>
+                                        <div id="dddQuest1">
+                                        </div>
+                                        <p type="text" for="pendDisab" name="disabScreen">Does anyone have an application pending for SSI or SSDI:</p>
+                                        <div id="dddQuest2">
+                                        </div>
+                                        <p type="text" for="appealDisab" name="disabScreen">Does anyone have an appeal pending or under reconsideration with the Social Security Administration:</p>
+                                        <div id="dddQuest3">
+                                        </div>
+                                    </div>
+
                                     <br>
                                     <label type="radio" for="pregnantYes" name="pregnant">Is anyone pregnant: Yes</label>
-                                    <input type="radio" id="pregnantYes" value=yes name="pregnant" onclick="showMe('pregnant1', this)">
-                                    <label type="radio" for="pregnantNo" name="pregnant" value=no>No</label>
-                                    <input type="radio" id="pregnantNo" name="pregnant" value=no onclick="hideIt('pregnant1', this)">
+                                    <input type="radio" id="pregnantYes" value="yes" name="pregnant" onclick="showMe('pregnant1', this);">
+                                    <label type="radio" for="pregnantNo" name="pregnant" value="no">No</label>
+                                    <input type="radio" id="pregnantNo" name="pregnant" value="no" onclick="hideIt('pregnant1', this);">
                                     <br>
                                     <div id="pregnant1" style="display:none">
                                         <label type="text" for="pregnantDetail" name="pregnant"></label>
-                                        <input type=text name="pregnantDetail" placeholder="Enter member name and the due date." style="width: 500px;"></input>
+                                        <input type="text" name="pregnantDetail" placeholder="Enter member name and the due date." style="width: 500px;"></input>
                                         <br>
-                                        <label type='select' for='pregCount' name=pregCountLbl>Number of unborns expected:</label>
-                                        <select id='pregCount'>
-                                            <option value=none></option>
-                                            <option value=1>1</option>
-                                            <option value=2>2</option>
-                                            <option value=3>3</option>
+                                        <label type="select" for="pregCount" name="pregCountLbl">Number of unborns expected:</label>
+                                        <select id="pregCount">
+                                            <option value="none"></option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
                                         </select>
                                     </div>
                                     <br>
                                     <label type="radio" for="taxesYes" name="filingTaxes">Does anyone in the HH intend to file taxes in the upcoming year: Yes</label>
-                                    <input type="radio" id="taxesYes" value=yes name="filingTaxes" onclick="showMe('filingTaxes1', this)">
-                                    <label type="radio" for="taxesNo" name="filingTaxes" value=no>No</label>
-                                    <input type="radio" id="taxesNo" name="filingTaxes" value=no onclick="hideIt('filingTaxes1', this)">
+                                    <input type="radio" id="taxesYes" value="yes" name="filingTaxes" onclick="showMe('filingTaxes1', this)">
+                                    <label type="radio" for="taxesNo" name="filingTaxes" value="no">No</label>
+                                    <input type="radio" id="taxesNo" name="filingTaxes" value="no" onclick="hideIt('filingTaxes1', this)">
                                     <br>
                                     <div id="filingTaxes1" style="display:none">
                                         <label type="select" for= "taxStatus" name="filingTaxes">Filing Status:</label>
@@ -1110,32 +549,32 @@
                                                 <option value="Married-Separately">Married-Separately</option>
                                             </select>
                                         <br>
-                                        <textarea type=textarea name="taxDeductions" placeholder="Provide a list of all all allowable tax deductions for those who intend to file taxes.  Indicate whether it is a monthly or annual amount for each deduction. If no tax deductions are claimed, please state 'None' for this question: TATD codes & Federal C deduction amount: AP (Alimony paid) $0, OT (OTHER) $0, SL (Student loan interest deduction) $2500"
+                                        <textarea type="textarea" name="taxDeductions" placeholder="Provide a list of all all allowable tax deductions for those who intend to file taxes.  Indicate whether it is a monthly or annual amount for each deduction. If no tax deductions are claimed, please state 'None' for this question: TATD codes &amp; Federal C deduction amount: AP (Alimony paid) $0, OT (OTHER) $0, SL (Student loan interest deduction) $2500"
                                             rows="4"  onkeyup="auto_grow(this)"></textarea>
                                         <br>
                                         <label type="radio" for="dependentsYes" name="dependentsTaxes">Tax filer claiming everyone in the HH as their tax dependent: Yes</label>
-                                        <input type="radio" id="dependentsYes" value=yes name="dependentsTaxes" onclick="hideIt('dependClaimed', this)">
-                                        <label type="radio" for="dependentsNo" name="dependentsTaxes" value=no>No</label>
-                                        <input type="radio" id="dependentsNo" name="dependentsTaxes" value=no onclick="showMe('dependClaimed', this)">
+                                        <input type="radio" id="dependentsYes" value="yes" name="dependentsTaxes" onclick="hideIt('dependClaimed', this)">
+                                        <label type="radio" for="dependentsNo" name="dependentsTaxes" value="no">No</label>
+                                        <input type="radio" id="dependentsNo" name="dependentsTaxes" value="no" onclick="showMe('dependClaimed', this)">
                                         <div id="dependClaimed" style="display:none">
                                             <br>
                                             <label type="radio" for="dependentClaimYes" name="dependentClaim">Is anyone outside the home claiming a HH member as their tax dependent: Yes</label>
-                                            <input type="radio" id="dependentClaimYes" value=yes name="dependentClaim" onclick="showMe('dependedClaimedYes', this)">
-                                            <label type="radio" for="dependentClaimNo" name="dependentClaim" value=no>No</label>
-                                            <input type="radio" id="dependentClaimNo" name="dependentClaim" value=no onclick="hideIt('dependedClaimedYes', this)">
+                                            <input type="radio" id="dependentClaimYes" value="yes" name="dependentClaim" onclick="showMe('dependedClaimedYes', this)">
+                                            <label type="radio" for="dependentClaimNo" name="dependentClaim" value="no">No</label>
+                                            <input type="radio" id="dependentClaimNo" name="dependentClaim" value="no" onclick="hideIt('dependedClaimedYes', this)">
                                             <div id="dependedClaimedYes" style="display:none">
                                                 <br>
-                                                <textarea type=textarea name="dependentClaimDesc" placeholder="Enter the name of the person claiming someone in the HH and who they are claiming." rows="1" ></textarea>
+                                                <textarea type="textarea" name="dependentClaimDesc" placeholder="Enter the name of the person claiming someone in the HH and who they are claiming." rows="1" ></textarea>
                                             </div>
                                             <div id="dependClaimed" style="display:none">
                                                 <br>
                                                 <label type="radio" for="dependentClaimYes" name="dependentClaim">Is anyone outside the home claiming a HH member as their tax dependent: Yes</label>
-                                                <input type="radio" id="dependentClaimYes" value=yes name="dependentClaim" onclick="showMe('dependedClaimedYes', this)">
-                                                <label type="radio" for="dependentClaimNo" name="dependentClaim" value=no>No</label>
-                                                <input type="radio" id="dependentClaimNo" name="dependentClaim" value=no onclick="hideIt('dependedClaimedYes', this)">
+                                                <input type="radio" id="dependentClaimYes" value="yes" name="dependentClaim" onclick="showMe('dependedClaimedYes', this)">
+                                                <label type="radio" for="dependentClaimNo" name="dependentClaim" value="no">No</label>
+                                                <input type="radio" id="dependentClaimNo" name="dependentClaim" value="no" onclick="hideIt('dependedClaimedYes', this)">
                                                 <div id="dependedClaimedYes" style="display:none">
                                                     <br>
-                                                    <textarea type=textarea name="dependentClaimDesc" placeholder="Enter the name of the person claiming someone in the HH and who they are claiming." rows="1"  onkeyup="auto_grow(this)"></textarea>
+                                                    <textarea type="textarea" name="dependentClaimDesc" placeholder="Enter the name of the person claiming someone in the HH and who they are claiming." rows="1"  onkeyup="auto_grow(this)"></textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -1146,7 +585,7 @@
                                         <input type="radio" name="oothClaimNo" id="oothClaimNo" value="No" onclick="hideIt('oothClaimYes1', this)">
                                         <div id="oothClaimYes1" style="display:none">
                                             <br>
-                                            <textarea type=textarea name="oothClaimDesc" placeholder="Enter the name of the OOTH being claimed." rows="1"  onkeyup="auto_grow(this)"></textarea>
+                                            <textarea type="textarea" name="oothClaimDesc" placeholder="Enter the name of the OOTH being claimed." rows="1"  onkeyup="auto_grow(this)"></textarea>
                                             <br>
                                             <label type="radio" for="oothIncomeYes" name="oothIncome">Does the claimed OOTH have income: Yes</label>
                                             <input type="radio" name="oothIncomeYes" id="oothClaimYes" value="Yes" onclick="showMe('oothIncomeYes1', this)">
@@ -1154,7 +593,7 @@
                                             <input type="radio" name="oothIncomeNo" id="oothIncome" value="No" onclick="hideIt('oothIncomeYes1', this)">
                                             <div id="oothIncomeYes1" style="display:none">
                                                 <br>
-                                                <textarea type=textarea name="oothIncomeDesc" placeholder="Enter the type and amount of their income." rows="1"  onkeyup="auto_grow(this)"></textarea>
+                                                <textarea type="textarea" name="oothIncomeDesc" placeholder="Enter the type and amount of their income." rows="1"  onkeyup="auto_grow(this)"></textarea>
                                                 <br>
                                             </div>
                                         </div>
@@ -1165,20 +604,20 @@
                                     <label type="radio" for="agedFCNo" name="agedFC">No</label>
                                     <input type="radio" name="agedFC" id="agedFCNo" value="No" onclick="hideIt('fosterCareYes1', this)">
                                     <div id="fosterCareYes1" style="display:none">
-                                        <textarea type=textarea name="agedFCNames" placeholder="Enter the name of the member who aged out of Foster Care." rows="1"  onkeyup="auto_grow(this)"></textarea>
+                                        <textarea type="textarea" name="agedFCNames" placeholder="Enter the name of the member who aged out of Foster Care." rows="1"  onkeyup="auto_grow(this)"></textarea>
                                     </div>
                                     <p class="lastMedicaid" id='tplQuestion'>Does anyone in the household have a medical insurance policy such as private/group, enrolled in Health Maintenance Organization (HMO), Medicare Supplemental Policy, Vehicle Including Personal Injury Protect (PIP)?</p>
                                     <label type="radio" for="tplYes" name="tpl">Yes</label>
-                                    <input class="shortRadio" type="radio" id="tplYes" value=yes name="tpl" onclick="document.getElementById('tplMessage').style.display = 'inline';">
-                                    <label type="radio" for="tplNo" name="tpl" value=no>No</label>
-                                    <input class="shortRadio" type="radio" id="tplNo" name="tpl" value=no onclick="hideIt('tplMessage', this)">
+                                    <input class="shortRadio" type="radio" id="tplYes" value="yes" name="tpl" onclick="document.getElementById('tplMessage').style.display = 'inline';">
+                                    <label type="radio" for="tplNo" name="tpl" value="no">No</label>
+                                    <input class="shortRadio" type="radio" id="tplNo" name="tpl" value="no" onclick="hideIt('tplMessage', this)">
                                     <div id=tplMessage style="display:none">
                                         <p class="lastMedicaid1" style="display: inline">Complete AFMD.</p>
                                         <br>
                                     </div>
                                     <br>
                                     <label type="textarea" id="nativeIncomeLbl" for="nativeIncome">American Indian/Alaska Native:</label>
-                                    <textarea class="householdDisc" type=textarea name="nativeIncome" id="nativeIncome" rows="4"  placeholder="Does anyone in the household receive income from per capita payments from a tribe, from natural resources or from selling things of cultural significance? If so, provide the monthly or annual amount." onkeyup="auto_grow(this)"></textarea>
+                                    <textarea class="householdDisc" type="textarea" name="nativeIncome" id="nativeIncome" rows="4"  placeholder="Does anyone in the household receive income from per capita payments from a tribe, from natural resources or from selling things of cultural significance? If so, provide the monthly or annual amount." onkeyup="auto_grow(this)"></textarea>
                             </section>
                         </td>
                     </tr>
@@ -1199,16 +638,16 @@
                                     <input type="radio" id="attendSchoolNo" name="attendSchool" value="No" onclick="hideIt('childSchool', this)">
                                     <br>
                                     <div id="childSchool" style="display:none">
-                                        <textarea type=textarea name="childSchoolName" id="childSchoolName" rows="1"  placeholder="Enter the name of the school(s)"></textarea>
+                                        <textarea type="textarea" name="childSchoolName" id="childSchoolName" rows="1"  placeholder="Enter the name of the school(s)"></textarea>
                                     </div>
                                     <br>
                                     <label type="radio">Are all children under 5 years old current with immunizations:</label>
                                     <label type="radio" for="immunizeYes">Yes</label>
                                     <input type="radio" id="immunizeYes" name="immunize" value="Yes" onclick='document.getElementById("immunChildDesc").style.display = "block"'>
                                     <label type="radio" for="immunizeNo">No</label>
-                                    <input type="radio" id="immunizeNo" name="immunize" value="No" onclick='document.getElementById("immunChildDesc").style.display = "none"'>
+                                    <input type="radio" id="immunizeNo" name="immunize" value="No" onclick="document.getElementById('immunChildDesc').style.display = 'none'">
                                     <div id="immunChild"></div>
-                                    <textarea name='immunizedChildDesc' id='immunChildDesc' rows="1"  placeholder='Enter the name of the child(ren).' style="display: none;" onkeyup="auto_grow(this)"></textarea>
+                                    <textarea name="immunizedChildDesc" id="immunChildDesc" rows="1"  placeholder="Enter the name of the child(ren)." style="display: none;" onkeyup="auto_grow(this)"></textarea>
                                     <br>
                                     <label type="radio">Is applicant a teen parent:</label>
                                     <label type="radio" for="teenParentYes">Yes</label>
@@ -1217,7 +656,7 @@
                                     <input type="radio" id="teenParentNo" name="teenParent" value="No" onclick="hideIt('teenParentSchool', this)">
                                     <div id="teenParentSchool" style="display:none">
                                         <br>
-                                        <textarea type=textarea name="teenParentSchool" placeholder="Enter name of school or GED program the teen parent attends." rows="1" ></textarea>
+                                        <textarea type="textarea" name="teenParentSchool" placeholder="Enter name of school or GED program the teen parent attends." rows="1" ></textarea>
                                     </div>
                                     <br>
                                     <label type="radio">Has parent/guardian completed a school conference by phone or in person each semester:</label>
@@ -1231,7 +670,7 @@
                                     <input type="radio" id="needForCareYes" name="needForCare" value="Yes" onclick="showMe('disabledMemDesc', this)">
                                     <label type="radio" for="needForCareNo">No</label>
                                     <input type="radio" id="needForCareNo" name="needForCare" value="No" onclick="hideIt('disabledMemDesc', this)">
-                                    <textarea name='disabledMemDesc' id='disabledMemDesc' rows="1"  placeholder='Enter the name of the disabled household member(s).' style="display: none;" onkeyup="auto_grow(this)"></textarea>
+                                    <textarea name='disabledMemDesc' id='disabledMemDesc' rows="1"  placeholder="Enter the name of the disabled household member(s)." style="display: none;" onkeyup="auto_grow(this)"></textarea>
                                 </form>
                             </section>
                         </td>
@@ -1240,7 +679,7 @@
                         <td id="caretakerTCAArea" class="dynamicContent" style="display: none">
                             <section>
                                 <form id="caretakerTCA">
-                                    <textarea type=textarea name="caretakerRelation" id="caretakerRelation" rows="1"  placeholder="How is the applicant related to the child? (e.g. maternal/paternal grandparent, aunt/uncle etc.)." onkeyup="auto_grow(this)"></textarea>
+                                    <textarea type="textarea" name="caretakerRelation" id="caretakerRelation" rows="1"  placeholder="How is the applicant related to the child? (e.g. maternal/paternal grandparent, aunt/uncle etc.)." onkeyup="auto_grow(this)"></textarea>
                                     <br>
                                     <label type="radio">Does the caretaker intend to use the child's cash assistance to help pay for their shelter costs:</label>
                                     <label type="radio" for="tcaShelterYes">Yes</label>
@@ -1250,7 +689,7 @@
                                     <br>
                                     <div id="tcaShelterAmount" style="display:none">
                                         <br>
-                                        <textarea type=textarea name="tcaShelterAmount" placeholder="What amount will be used toward shelter costs." rows="1"  onkeyup="auto_grow(this)"></textarea>
+                                        <textarea type="textarea" name="tcaShelterAmount" placeholder="What amount will be used toward shelter costs." rows="1"  onkeyup="auto_grow(this)"></textarea>
                                     </div>
                                     <br>
                                     <label type="radio">Does the caretaker wish to be included in the cash assistance:</label>
@@ -1294,7 +733,7 @@
                                     <input type="radio" id="rapShelterNo" name="rapShelter" value="No" onclick="showMe('rapHomeless1', this); hideIt('rapShelterAmount', this)"><label type="radio" for="rapShelterNo">No</label>
                                     <br>
                                     <div id="rapShelterAmount" style="display:none">
-                                        <textarea type=textarea name="rapShelterAmount" placeholder="What amount will be obligated for shelter costs." rows="1"  onkeyup="auto_grow(this)"></textarea>
+                                        <textarea type="textarea" name="rapShelterAmount" placeholder="What amount will be obligated for shelter costs." rows="1"  onkeyup="auto_grow(this)"></textarea>
                                     </div>
                                     <div id="rapHomeless1" style="display:none">
                                         <br>
@@ -1312,7 +751,7 @@
                                     <input type="radio" id="rapMarriedNo" name="rapMarried" value="No" onclick="hideIt('rapSpouse1', this)">
                                     <br>
                                     <div id="rapSpouse1" style="display:none">
-                                        <textarea type=textarea name="rapSpouseName" placeholder="What is the spouse's name and where do they live." rows="1"  onkeyup="auto_grow(this)"></textarea>
+                                        <textarea type="textarea" name="rapSpouseName" placeholder="What is the spouse's name and where do they live." rows="1"  onkeyup="auto_grow(this)"></textarea>
                                     </div>
                                 </form>
                             </section>
@@ -1323,7 +762,7 @@
                             <section>
                                 <form id="wrapUp">
                                     <label type="textarea" id="addCommentLbl" for="addComment">Additional Comments:</label>
-                                    <textarea class="householdDisc" type=textarea name="addComments" id="addComment" rows="4"  placeholder="If driver is run before interview this section must include a list of all items that must be explored with the applicant during the interview, including potential E&T/ABAWD."
+                                    <textarea class="householdDisc" type="textarea" name="addComments" id="addComment" rows="4"  placeholder="Check case for upcoming changes that might affect any exemptions or exceptions for all members.  If driver is run before interview this section must include a list of all items that must be explored with the applicant during the interview, including potential E&amp;T/ABAWD."
                                         onkeyup="auto_grow(this)"></textarea>
                                     <br>
                                     <label type="radio">Customer Pended:</label>
@@ -1334,7 +773,7 @@
                                     <br>
                                     <div id="pendDet" style="display:none">
                                         <label type="textarea" id="pendingLbl" for="pending">Pending Items:</label>
-                                        <textarea class="householdDisc" type=textarea name="pendingItems" id="pending" rows="4"  placeholder="Include a discussion of any pending information that is needed from the applicant."></textarea>
+                                        <textarea class="householdDisc" type="textarea" name="pendingItems" id="pending" rows="4"  placeholder="Include a discussion of any pending information that is needed from the applicant."></textarea>
                                         <label for="datePend">Pending Due:</label>
                                         <input type=date id="datePend" name="datePend">
                                     </div>
@@ -1344,11 +783,11 @@
                                     <label type="radio" for="fraudRefNo">No</label>
                                     <input type="radio" id="fraudRefNo" name="fraudRef" value="No" onclick="hideIt('fraudRsn', this)">
                                     <div id="fraudRsn" style="display:none">
-                                        <textarea type=textarea id="fraudRsnDet" placeholder="Explain the reason for Fraud referral." rows="1"  onkeyup="auto_grow(this)"></textarea>
+                                        <textarea type="textarea" id="fraudRsnDet" placeholder="Explain the reason for Fraud referral." rows="1"  onkeyup="auto_grow(this)"></textarea>
                                     </div>
                                     <br>
                                     <label for="workerId">FLORIDA ID:</label>
-                                    <input type=text id="workerId">
+                                    <input type="text" id="workerId">
                                 </form>
                             </section>
                         </td>
@@ -1357,10 +796,12 @@
             </table>
             </form>
             <section id="clrcPasteInfo" style="display: none">
-                <input type="button" id="getData" onclick="getCLRCText();" value="Get CLRC Text">
+                <input type="button" id="getData" onclick="checkDDD(); getCLRCText();" value="Get CLRC Text">
                 <br>
                 <textarea class="householdDisc" id="clrcInfo"  style="display: none;" onfocus="auto_grow(this)" readonly>
-                    </textarea>
+                </textarea>
+                <br>
+                <p></p>
 
                 <script>
                     function getCLRCText() {
@@ -1375,14 +816,17 @@
                         var nameData = document.getElementById("interviewName").value;
                         var intvDate = document.getElementById("dateIntv").value;
                         var ncpAns = document.getElementById("ncpNo").checked;
+                        var table = document.getElementById("hhCompTable");
+                        var rows = table.getElementsByTagName("tr");
                         var hhNameArray = [];
-                        for (i = 0; i < 10; i++) {
+                        var dddMem = "";
+                        for (i = 0; i < rows.length-1; i++) {
                             if (document.getElementById('name' + (i + 1)).value != "") {
                                 hhNameArray.push(" " + document.getElementById('name' + (i + 1)).value);
                             }
                         };
                         var hhPPArray = [];
-                        for (a = 0; a < 10; a++) {
+                        for (a = 0; a < rows.length-1; a++) {
                             if (document.getElementById('name' + (a + 1)).value != "") {
                                 hhPPArray.push(document.getElementById('pandp' + (a + 1)).checked);
                             }
@@ -1408,7 +852,7 @@
                             ppMember = ""
                         };
                         var hhAppArray = [];
-                        for (p = 0; p < 10; p++) {
+                        for (p = 0; p < rows.length-1; p++) {
                             if (document.getElementById('name' + (p + 1)).value != "") {
                                 hhAppArray.push(document.getElementById('apply' + (p + 1)).checked);
                             }
@@ -1420,7 +864,7 @@
                         if (hhAppArray.length == 0) {
                             appMember = "";
                         } else if (appMember == true) {
-                            appMember = " All Members applying for benefits.";
+                            appMember = " All Members applying for benefits. ";
                         } else {
                             for (i = 0; i < hhAppArray.length; i++) {
                                 if (hhAppArray[i] == false) {
@@ -1430,7 +874,7 @@
                             }
                         };
                         var hhDisqArray = [];
-                        for (s = 0; s < 10; s++) {
+                        for (s = 0; s < rows.length-1; s++) {
                             if (document.getElementById('name' + (s + 1)).value != "") {
                                 hhDisqArray.push(document.getElementById('disq' + (s + 1)).checked);
                             }
@@ -1465,12 +909,12 @@
                         var earnAns = document.getElementById("earnedIncomeDisc").value;
                         clrcDta.style.display = "block";
                         if (wrkrId != "") {
-                            wrkrId = wrkrId + " "
+                            wrkrId = wrkrId + "\n"
                         } else {
                             wrkrId = ""
                         }
                         if (accNum != "") {
-                            accNum = "Access#: " + accNum + " "
+                            accNum = "Access#: " + accNum + "\n"
                         }
                         if (doa != "") {
                             doa = moment(doa).format('L');
@@ -1487,13 +931,13 @@
                             mab = "";
                         }
                         if (cab == true && caType == "tca") {
-                            cab = "temporary cash assistance, ";
+                            cab = "temporary cash assistance \n";
                         } else if (cab == true && caType == "caretakerTCA") {
-                            cab = "caretaker cash assistance, ";
+                            cab = "caretaker cash assistance \n";
                         } else if (cab == true && caType == "rap") {
-                            cab = "rap cash assistance, ";
+                            cab = "rap cash assistance \n";
                         } else {
-                            cab = ""
+                            cab = "\n"
                         }
                         if (nameData != "") {
                             nameData = ("interviewed: " + nameData + " ");
@@ -1563,15 +1007,13 @@
                         if (mgmtAns != "") {
                             mgmtAns = "Management: " + mgmtAns + " "
                         }
-                        //Scripting to check for required if absolutely necessary...
-                        //var x = document.getElementById("commonCLRC").elements;
-                        //for (i = 0; i < x.length; i++) {
-                        //        if (x[i].required == true && x[i].value == "") {
-                        //            alert("Required field " + x[i].name + " not completed")
-                        //            return;
-                        //        }
-                        //}
-                        clrcDta.value = wrkrId + accNum + doa + "Benefits applied for: " + fab + mab + cab + nameData + intvDate + addYesAns + addNoAns + phoneYesAns + phoneNoAns + rAndRText + ncpAns + "HH members: " + hhNameArray + ". " + ppMember + appMember + disqMember + citAns + assetAns + earnAns + unEarnAns + hhExpenAns + mgmtAns;
+                        if (potenDDD.length == 1) {
+                            dddMem = potenDDD + " appears to be potential DDD.";
+                            }
+                        if (potenDDD.length > 1) {
+                            dddMem = potenDDD + " appear to be potential DDD.";
+                            }
+                        clrcDta.value = wrkrId + accNum + doa + "Benefits applied for: " + fab + mab + cab + nameData + intvDate + addYesAns + addNoAns + phoneYesAns + phoneNoAns + rAndRText + ncpAns + "HH members: " + hhNameArray + ". " + ppMember + appMember + disqMember + citAns + assetAns + earnAns + unEarnAns + hhExpenAns + mgmtAns + dddMem;
                         //+ "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur? Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?";
                         clrcDta.focus();
                     }
