@@ -13,7 +13,18 @@
             }
             return(array2);
         }
-    
+
+        Element.prototype.remove = function() {
+            this.parentElement.removeChild(this);
+        }
+        NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+            for(var i = this.length - 1; i >= 0; i--) {
+                if(this[i] && this[i].parentElement) {
+                    this[i].parentElement.removeChild(this[i]);
+                }
+            }
+        }
+        
         function getabawdName(d, array) {
             document.getElementById('incomeSpan').innerHTML=abawdIncomeEquiv;
             document.getElementById('abawdDiv' + d + '0').style.display = "none";
@@ -233,6 +244,11 @@
             }
             else {document.getElementById("dddScreening").style.display = "none";
         }
+            if (abawdMember == true) {
+                document.getElementById("ABAWDStateSect").style.display = "block";
+            }
+            else {document.getElementById("ABAWDStateSect").style.display = "none";
+        }
         }
     
         function createDDD() {
@@ -382,7 +398,8 @@
         function abawdHourChangeCheck(array) {
             for (i = 0; i < array.length; i++) {
                 var wrk1 = document.getElementById('abawdEName' + i).checked;
-                var wrk2 = document.getElementById('abawdIName' + i);
+                var wrk2 = document.getElementById('abawdIName' + i).checked;
+                var wrk2 = document.getElementById('abawdIName' + i).checked;
                 if (wrk1 == true) {
                     document.getElementById('abawdWorking').style.display = "inline";
                 }
