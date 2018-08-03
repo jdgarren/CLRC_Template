@@ -17,6 +17,7 @@
     <script>
         var fedMinWage = 7.25;
         var abawdIncomeEquiv = (fedMinWage*30).toFixed(2);
+        var abawdMonthEquiv = (abawdIncomeEquiv * 4).toFixed(2);
         var abawdMembList = [];
         var abawdAList = [];
         var abawdBList = [];
@@ -94,13 +95,13 @@
 
             <div id="typeTCA" style="display:none">
                 <br>
-                <label type="select" for="typeTCA1">Cash Assistance Type:</label>
-                <select id="typeTCA1">
-                    <option value="none"></option>
-                    <option value="tca">TCA</option>
-                    <option value="caretakerTCA">Caretaker TCA</option>
-                    <option value="rap">RAP</option>
-                </select>
+                <label type="select" for="typeTCA">Cash Assistance Type:</label>
+                <label type="checkbox" for="regtca" name="typeTCA1">TCA</label>
+                <input type="checkbox" id="regtca" name="typeTCA1">
+                <label type="checkbox" for="caretakerTCA" name="typeTCA1">Caretaker TCA</label>
+                <input type="checkbox" id="caretakerTCA" name="typeTCA1">
+                <label type="checkbox" for="rap" name="typeTCA1">RAP<label>
+                <input type="checkbox" id="rap" name="typeTCA1">
             </div>
             <br>
             <label type="radio" for="int">Interview Completed?</label>
@@ -295,20 +296,20 @@
 
                                     <div id="ncpDet" style="display:none">
                                         <br>
-                                        <textarea type="textarea" id="ncpDetail" placeholder="Provide NCP details not reported on application or explain why NCP details were not provided or available." rows="4"  onkeyup="auto_grow(this)"></textarea>
+                                        <textarea type="textarea" id="ncpDetail" placeholder="Provide NCP details not reported on application or explain why NCP details were not provided or available.  If there are no changes from information on the application, this entry may be left blank." rows="4"  onkeyup="auto_grow(this)"></textarea>
                                     </div>
                                     <br>
                                     <label type="textarea" id="assets" for="assetDisc">Assets:</label>
-                                    <textarea class="householdDisc" type="textarea" name="assetDisc" id="assetDisc" rows="4"  display="block" placeholder="Include a discussion of assets belonging to each member of the Standard Filing Unit (SFU)." onkeyup="auto_grow(this)"></textarea>
+                                    <textarea class="householdDisc" type="textarea" name="assetDisc" id="assetDisc" rows="4"  display="block" placeholder="Include a discussion of assets belonging to each member of the Standard Filing Unit (SFU).  If none, include that here." onkeyup="auto_grow(this)"></textarea>
                                     <br>
                                     <label type="textarea" id="earnedIncome" for="earnedIncomeDisc">Earned Income:</label>
-                                    <textarea class="householdDisc" type="textarea" name="earnedIncomeDisc" id="earnedIncomeDisc" rows="4"  placeholder="Specify the employer for each member as appropriate and include details on hours worked and update on AFEI if needed.  Document any non-representative income or any other discrepancies from the application." onkeyup="auto_grow(this)"></textarea>
+                                    <textarea class="householdDisc" type="textarea" name="earnedIncomeDisc" id="earnedIncomeDisc" rows="4"  placeholder="Specify the employer for each member as appropriate and include details on hours worked and update on AFEI if needed.  Document any non-representative income or any other discrepancies from the application.  If none, include that here." onkeyup="auto_grow(this)"></textarea>
                                     <br>
                                     <label type="textarea" id="unearnedIncome" for="unearnedIncomeDisc">Unearned Income:</label>
-                                    <textarea class="householdDisc" type="textarea" name="unearnedIncomeDisc" id="unearnedIncomeDisc" rows="4"  placeholder="Include details on the type, source and frequency.  Document any non-representative income or any other discrepancies from the application." onkeyup="auto_grow(this)"></textarea>
+                                    <textarea class="householdDisc" type="textarea" name="unearnedIncomeDisc" id="unearnedIncomeDisc" rows="4"  placeholder="Include details on the type, source and frequency.  Document any non-representative income or any other discrepancies from the application.  If none, include that here." onkeyup="auto_grow(this)"></textarea>
                                     <br>
                                     <label type="textarea" id="expenses" for="expensesDisc">HH Expenses:</label>
-                                    <textarea class="householdDisc" type="textarea" name="expensesDisc" id="expensesDisc" rows="4"  placeholder="Discuss shelter, utilities, method of heating and cooling, medical, as well as any miscellaneous expenses and the payer of each.  Document any discrepancies from the application." onkeyup="auto_grow(this)"></textarea>
+                                    <textarea class="householdDisc" type="textarea" name="expensesDisc" id="expensesDisc" rows="4"  placeholder="Discuss shelter, utilities, method of heating or cooling, medical, dependent care, as well as any miscellaneous expenses and the payer of each.  Document any discrepancies from the application.  If none, include that here." onkeyup="auto_grow(this)"></textarea>
                                     <br>
                                     <label type="textarea" id="management" for="managementDisc">Management:</label>
                                     <textarea class="householdDisc" type="textarea" name="managementDisc" id="managementDisc" rows="4"  placeholder="Is the SFU able to meet reported expenses with income discussed?  If not, include a discussion on how Management is being met." onkeyup="auto_grow(this)" onfocus="createDDD()"></textarea>
@@ -321,7 +322,7 @@
                             <section>
                                 <form id="foodAssistance">
                                     <label>Is anyone a </label>
-                                    <a href='images/stuElg.html' target="_blank" class='inlineLink'>college student:</a> 
+                                    <a href='https://accessweb3.ad.dcf.state.fl.us/PolicyManual/PolicyManualDetail.aspx' target="_blank" class='inlineLink'>college student:</a> 
                                     <label type="radio" for="collegeYes" name="college"> Yes</label>
                                     <input type="radio" id="collegeYes" name="college" value="Yes" onclick="showMe('collegeDesc', this)">
                                     <label type="radio" for="collegeNo" name="college">No</label>
@@ -401,7 +402,7 @@
     
                                         <div id="abawdDivE0" style="display: none">
                                             <br>
-                                            <p class="abawdLabel" id="abawdEmp30">Is anyone in the household employed, self-employed, volunteering, working minimum of <strong>30</strong> hours weekly or earning weekly wages at least equal to $<span id="incomeSpan"></span>. Can be paid or in-kind <strong>(AGPI 21)</strong>:</p>
+                                            <p class="abawdLabel" id="abawdEmp30">Is anyone in the household employed, self-employed, volunteering, working minimum of <strong>30</strong> hours weekly or earning weekly wages at least equal to $<span id="incomeSpan"></span>, or monthly $<span id="monthlySpan"></span>. Can be paid or in-kind <strong>(AGPI 21)</strong>:</p>
                                             <label type="checkbox" for="abawdEName0" id="abawdELabel0"></label>
                                             <input type="checkbox" id="abawdEName0">
                                         </div>
@@ -421,7 +422,7 @@
 
                                         <div id="abawdDivG0" style="display: none">
                                             <br>
-                                            <p class="abawdLabel" id="abawdUnfit">Is anyone in the household physically or mentally unfit for employment at the level of at least 20 hours per week,  averaged monthly or pending for SSI/SSDI or some other type of disability (temporary or permanent) <strong>(AGPI 15)</strong>:</p>
+                                            <p class="abawdLabel" id="abawdUnfit">Is anyone in the household unable to work at least 20 hours per week, averaged monthly, as a result of being physically or mentally unfit or pending for SSI/SSDI or some other type of disability (temporary or permanent) <strong>(AGPI 15)</strong>:</p>
                                             <label type="checkbox" for="abawdGName0" id="abawdGLabel0"></label>
                                             <input type="checkbox" id="abawdGName0" onclick="showMe('unfitDur', this)">
                                         </div>
@@ -464,26 +465,18 @@
 
                                         </div>
                                         <div id="abawdUsedTLDiv">
-                                                <label type="radio" for="abawdUsedTLYes" id="abawdUsedTL" name="abawdTimeLimit">Were all three time limited months used:    Yes</label>
+                                                <label type="radio" for="abawdUsedTLYes" id="abawdUsedTL" name="abawdTimeLimit">Have all three time limited months used:    Yes</label>
                                                 <input type="radio" id="abawdUsedTLYes" name="abawdTimeLimit" onclick="showMe('abawdRegainQ', this)">
                                                 <label type="radio" for="abawdUsedTLNo" id="abawdUsedTL" name="abawdTimeLimit">No</label>
                                                 <input type="radio" id="abawdUsedTLNo" name="abawdTimeLimit" onclick="hideIt('abawdRegainQ', this)">
 
                                             <div id="abawdRegainQ" style="display: none">
-                                                <label type="radio" for="abawdRegainYes" id="abawdRegainElg" name="abawdTimeLimit">Were they informed how to regain eligibility:   Yes</label>
+                                                <label type="radio" for="abawdRegainYes" id="abawdRegainElg" name="abawdTimeLimit">Was the customer informed how to regain eligibility:   Yes</label>
                                                 <input type="radio" id="abawdRegainYes" name="abawdRegain">
                                                 <label type="radio" for="abawdRegainNo" id="abawdUsedTL" name="abawdTimeLimit">No</label>
                                                 <input type="radio" id="abawdRegainNo" name="abawdRegain">
                                             </div>
                                         </div>
-                                        <div id="abawdARFSDiv">
-                                            <label type="radio" for="abawdARFSYes" id="abawdARFS" name="abawdARFSUpd">Was ARFS reviewed and updated:   Yes</label>
-                                            <input type="radio" id="abawdARFSYes" name="abawdARFSUpd" onclick="showMe('arfsExplain', this)">
-                                            <label type="radio" for="abawdARFSNo" id="abawdARFS" name="abawdARFSUpd">No</label>
-                                            <input type="radio" id="abawdARFSNo" name="abawdARFSUpd" onclick="hideIt('arfsExplain', this)">
-                                            <textarea type="textarea" name="arfsExplain" id="arfsExplain" style="display: none"  placeholder="Explain how any discrepancies were resolved and how screen was updated." onkeyup="auto_grow(this)"></textarea>
-                                        </div>
-
                                     </div>
 
                                 </form>
@@ -728,7 +721,7 @@
                             <section>
                                 <form id="rapTCA">
                                     <br>
-                                    <label type="radio">Will the applicant be obliged to pay rent if they receive cash assistance:</label>
+                                    <label type="radio">Will the RAP applicant be obliged to pay rent if they receive cash assistance:</label>
                                     <input type="radio" id="rapShelterYes" name="rapShelter" value="Yes" onclick="showMe('rapShelterAmount', this); hideIt('rapHomeless1', this)"><label type="radio" for="rapShelterYes">Yes</label>
                                     <input type="radio" id="rapShelterNo" name="rapShelter" value="No" onclick="showMe('rapHomeless1', this); hideIt('rapShelterAmount', this)"><label type="radio" for="rapShelterNo">No</label>
                                     <br>
