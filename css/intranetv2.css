@@ -1,0 +1,78 @@
+/* override standard intranet template css formatting */
+body{height:auto;font-size:100%;line-height:1.4;}
+p{line-height:1.4}
+#headerIntra{font-style:italic;font-size:26px;color:#8f8f8f;margin:20px auto 0px;text-align:center;width:100%;}
+#searchArea{width:100%;margin-top:0px;}
+#searchArea input{margin:0px !important;font-size:inherit;height:auto;padding:0.5rem;}
+#searchLabel{padding-top:0.3rem;text-align:right;}
+#pageWrapper{width:auto;margin:0px;}
+#browse{font-style:italic;font-weight:bold;padding-left:5px;}
+.DCFSideMenuClass .DCF-Menu{width:100%;}
+.DCFSideMenuClass ul.DCF-Menu{font-size:90%;font-family:inherit;}
+.DCFSideMenuClass ul.DCF-Menu ul li{font-size:100%;}
+.DCFSideMenuClass ul.DCF-Menu ul{left:100%;}
+#centerArea{width:auto;}
+.Full{width:auto;}
+#banners{width:100%;}
+#myScroll1{width:100% !important;}
+#footerArea{background: #3863ab;
+	text-align: center;
+	color: white;
+	padding:5px 0px;
+	width:auto;
+	height:auto;
+	font-size:90%;
+	max-width:100%;
+}
+#footerArea a{font-size:100%;color:white;}
+.box  ul li{padding-bottom:inherit;font-size:16px;}
+
+/*box page style*/
+.box {min-height:150px;margin:0px;}
+.box h2{font-size:1.3875rem;height:auto;}
+.box h3{font-size:1.3875rem;height:auto;}
+.box ul{list-style:inherit;}
+.box .more{height:auto;position: inherit;}
+
+
+.DCF-Menu-WithChildren .DCF-Menu-WithLink:after{content:" \00BB";}
+.DCF-Menu-WithChildren .DCF-Menu-NonLink{padding-left:10px;}
+.DCF-Menu-WithChildren .DCF-Menu-NonLink:after{content:" \00BB";}
+
+/*end override dcf standard intranet template css*/
+
+
+/*navigation menu styling */
+.top-bar {padding:0px;font-size:90%;line-height:100%;margin-bottom:5px;}
+.top-bar, .top-bar ul{background-color:#3863ab;}
+.top-bar, .top-bar ul a {color:#ffffff;}
+.top-bar ul a:hover {color:#ffffff;background-color:#48834D;text-decoration:none;}
+.title-bar{background-color:#3863ab;color:#ffffff;}
+.mobile-ofc{background-color:#3863ab;color:#ffffff;}
+.mobile-ofc a{color:#ffffff;}
+.mobile-ofc a:hover{background-color:#48834D}
+.menu li{z-index:999;/*float:left;*/}
+.menu > li > a {padding:0.5rem 0.6rem;}
+.offscreen {
+	position: absolute;
+	top: -1000px;
+	left: -1000px;
+	height: 1px;
+	width: 1px;
+	text-align: left;
+	overflow: hidden;
+}
+.off-canvas-wrapper{overflow-y:hidden;}
+.close-button{top:0rem;}
+
+/*page styles*/
+#content a,#area a{color:#3863ab;font-weight:bold;}
+a:hover{text-decoration:underline;}
+
+table thead {
+	background-color: #3863AB;
+	color: #FFF;
+	text-align:center;
+}
+
+

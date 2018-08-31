@@ -1,0 +1,188 @@
+.splashScreenMain {
+	padding-top: 0px;
+	padding-right: 0px;
+	padding-left: 0px;
+	padding-bottom: 1px;
+	margin: 1px;
+	display: block;
+	border: 1px solid;
+	border-color: 2px #767575;
+	border-radius: 15px;
+}
+
+.splashScreenRight {
+	padding-top: 0px;
+	padding-right: 0px;
+	padding-left: 0px;
+	padding-bottom: 1px;
+	margin: 1px;
+	display: block;
+	border: 1px solid;
+	border-color: #767575;
+	border-radius: 8px;
+	height: 275px;
+	width: 355px;
+}
+
+.splashScreenLeft {
+	padding-top: 0px;
+	padding-right: 0px;
+	padding-left: 0px;
+	padding-bottom: 1px;
+	margin: 1px;
+	display: block;
+	border: 1px solid;
+	border-color: #FDFDF9;
+	border-radius: 8px;
+	text-align: center;
+	width: 515px;
+}
+
+.splashScreenLeft img {
+	border-radius: 8px;
+	height: 275px;
+	width: 515px;
+}
+
+.splashScreenRight-titleDiv {
+	font-size: 16px;
+	font-family: Verdana;
+	font-weight: bold;
+	height: 63px;
+	color: white;
+	padding-left: 20px;
+	background-color: #000066;
+	border-radius: 5px;
+	display: table-cell;
+	vertical-align: middle;
+	width: 355px;
+	text-align: left;
+}
+
+.splashScreenRightContent {
+	height: 172px;
+	padding: 20px;
+}
+
+#headerLinks a {
+	font-family: Verdana;
+	font-size: 11px;
+	font-weight: bold;
+	margin: 0px 7px;
+	padding: 20px;
+	color: #B3B3A7;
+}
+
+.headerLinks {
+	font-family: Verdana;
+	font-size: 11px;
+	font-weight: bold;
+	margin: 0px 7px;
+	padding-bottom: 20px;
+	color: #B3B3A7;
+	line-height: 25px;
+}
+
+.loginLinks {
+	color: #ED9920;
+	font-family: Lucida Sans Unicode;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+#headerLinksDiv {
+	margin: 10px;
+}
+
+#dcf_page_body {
+	margin-top: 5px;
+	margin-bottom: 5px;
+	margin-left: 30px;
+	margin-right: 30px;
+}
+
+#accessNameDiv {
+	font-family: Georgia;
+	font-size: 26px;
+	font-variant: normal;
+	color: #3A3D30;
+	height: 32px;
+	padding: 5px;
+	vertical-align: middle;
+}
+
+#accessSubNameDiv {
+	font-family: Georgia;
+	font-size: 16px;
+	font-variant: normal;
+	color: #767575;
+}
+
+.accessNameDivText {
+	margin-left: 20px;
+	font-family: Georgia;
+	font-size: 26px;
+	font-variant: normal;
+	color: #205FAA;
+	vertical-align: middle;
+	line-height: 23px;
+	font-weight: bold;
+	padding: 50px 50px 50px 200px;
+	
+}
+
+#banner .screenReaderOnly {
+	position: absolute;
+	left: -999em;
+	width: 1em;
+	overflow: hidden;
+}
+
+.dcf_logotable {
+	background-color: #FFFFFF;
+	border: none;
+	margin: 0;
+	padding: 5px;
+	font-size: 12px;
+	font-weight: bold;
+	width: 1010px;
+}
+
+.dcflogoDiv {
+	margin: 5px 0px 0px 50px;
+	padding: 5px;
+}
+
+a:link {
+	color: #cc3333;
+}
+
+a:visited {
+	color: #3f6dc2;
+}
+
+a:hover {
+	color: #767575;
+}
+
+a:active {
+	color: #110066;
+}
+
+a.white-link:link {
+	color: #767575;
+}
+
+a.white-link:visited {
+	color: #3f6dc2;
+}
+
+a.white-link:hover {
+	color: #cc3333;
+}
+
+a.white-link:active {
+	color: #110066;
+}
+
+
