@@ -456,15 +456,14 @@
             cell1.id = "hhMem" + memNum;
             table.appendChild(cell1);
             var tbd1 = document.createElement("td");
-            tbd1.style.textAlign="center";
             cell1.appendChild(tbd1);
             var t1 = document.createElement("input");
             t1.type="text";
             t1.id="name" + memNum;
+            t1.style.width="100%";             
             t1.setAttribute('aria-labelledby', 'hhMembName');
             tbd1.appendChild(t1);
             var tbd2 = document.createElement("td");
-            tbd2.style.textAlign="center";             
             cell1.appendChild(tbd2);
             var t2 = document.createElement("input");
             t2.type="number";
@@ -473,7 +472,6 @@
             t2.setAttribute('aria-labelledby', 'age');
             tbd2.appendChild(t2);
             var tbd3 = document.createElement("td");
-            tbd2.style.textAlign="center";             
             cell1.appendChild(tbd3);
             var t3 = document.createElement("input");
             t3.type="checkbox";
@@ -481,7 +479,6 @@
             t3.setAttribute('aria-labelledby', 'applying');
             tbd3.appendChild(t3);
             var tbd4 = document.createElement("td");
-            tbd3.style.textAlign="center";
             tbd4.className = "PPCheck";
             cell1.appendChild(tbd4);
             if (fab == true) {
@@ -493,7 +490,6 @@
             t4.setAttribute('aria-labelledby', 'pandp');
             tbd4.appendChild(t4);
             var tbd5 = document.createElement("td");
-            tbd4.style.textAlign="center";            
             cell1.appendChild(tbd5);
             var t5 = document.createElement("input");
             t5.type="checkbox";
@@ -502,7 +498,6 @@
             t5.onclick = function() {showMe('sanction1', this);};
             tbd5.appendChild(t5);
             var tbd6 = document.createElement("td");
-            tbd5.style.textAlign="center";
             tbd6.className = "disabledCheck";
             cell1.appendChild(tbd6);
             if (mab == true) {
@@ -514,14 +509,12 @@
             t6.setAttribute('aria-labelledby', 'disab');
             tbd6.appendChild(t6);
             var tbd7 = document.createElement("td");
-            tbd6.style.textAlign="center";
             cell1.appendChild(tbd7);
             var t7 = document.createElement("input");
             t7.type ="button";
             t7.id = "add" + memNum;
             t7.value = "Add";
             t7.setAttribute('aria-labelledby', 'addMem');
-            tbd7.style.textAlign="center";
             t7.onclick = function() {newHHMember();};
             tbd7.appendChild(t7);
         memNum ++;
